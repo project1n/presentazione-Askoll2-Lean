@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Askoll 2 — Lean Fulfillment Stream</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;600;700;800&family=Barlow+Condensed:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  :root {
+    --navy: #08192E;
+    --navy2: #0D2340;
+    --blue: #007DB4;
+    --blue2: #00A8E8;
+    --cyan: #00D4FF;
+    --white: #FFFFFF;
+    --offwhite: #D8EEFF;
+    --dim: #7AAAC8;
+    --gold: #F5A623;
+    --green: #00C897;
+  }
+
+  body {
+    background: radial-gradient(ellipse 80% 80% at 70% 50%, #1A3A6E 0%, var(--navy) 65%);
+    font-family: 'Barlow', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  /* Container principale */
+  .launcher {
+    max-width: 1100px;
+    width: 100%;
+    background: rgba(8, 25, 46, 0.65);
+    backdrop-filter: blur(12px);
+    border-radius: 48px;
+    border: 1px solid rgba(0, 168, 232, 0.3);
+    padding: 48px 32px 56px;
+    text-align: center;
+    box-shadow: 0 25px 45px rgba(0,0,0,0.4);
+  }
+
+  /* Logo */
+  .logo {
+    margin-bottom: 32px;
+  }
+  .logo-main {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 64px;
+    letter-spacing: 4px;
+    color: var(--white);
+    line-height: 1;
+  }
+  .logo-main span {
+    color: var(--cyan);
+  }
+  .logo-sub {
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 5px;
+    color: var(--blue2);
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  /* Titolo + descrizione */
+  h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(32px, 8vw, 52px);
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+  h1 .hi {
+    color: var(--cyan);
+  }
+  .sub {
+    font-size: clamp(16px, 4vw, 20px);
+    font-weight: 300;
+    color: var(--dim);
+    max-width: 600px;
+    margin: 0 auto 40px auto;
+    line-height: 1.5;
+  }
+
+  /* Griglia scelta dispositivi */
+  .choice-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+    margin-bottom: 48px;
+  }
+  .choice-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(0,168,232,0.25);
+    border-radius: 32px;
+    padding: 32px 28px;
+    width: 260px;
+    transition: all 0.25s ease;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .choice-card:hover {
+    transform: translateY(-8px);
+    background: rgba(0,125,180,0.2);
+    border-color: var(--cyan);
+    box-shadow: 0 20px 30px -12px rgba(0,0,0,0.4);
+  }
+  .icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+  }
+  .device-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+  .device-desc {
+    font-size: 14px;
+    color: var(--dim);
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+  .badge-device {
+    background: rgba(0,168,232,0.2);
+    border-radius: 40px;
+    padding: 6px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--cyan);
+    letter-spacing: 1px;
+  }
+
+  /* Info aggiuntiva */
+  .info-note {
+    border-top: 1px solid rgba(0,168,232,0.2);
+    padding-top: 28px;
+    margin-top: 8px;
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .note-item {
+    font-size: 13px;
+    color: var(--dim);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .note-item span {
+    font-size: 18px;
+  }
+
+  @media (max-width: 640px) {
+    .launcher {
+      padding: 32px 20px 40px;
+    }
+    .logo-main {
+      font-size: 48px;
+    }
+    .choice-card {
+      width: 100%;
+      max-width: 280px;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="launcher">
+  <div class="logo">
+    <div class="logo-main"><span>A</span>skoll<span style="color:var(--blue2);font-size:48px;margin-left:4px;">2</span></div>
+    <div class="logo-sub">Aquarium &amp; Pond · Lean Fulfillment Stream</div>
+  </div>
+
+  <h1>Scegli la tua <span class="hi">esperienza</span></h1>
+  <div class="sub">Due modalità, stesso contenuto. Ottimizzata per ogni dispositivo.</div>
+
+  <div class="choice-grid">
+    <!-- Versione Computer (Desktop) -->
+    <a href="index.html" class="choice-card" id="desktopChoice">
+      <div class="icon">🖥️</div>
+      <div class="device-name">Computer / Desktop</div>
+      <div class="device-desc">Layout ampio, animazioni fluide, navigazione a slide orizzontali con tasti. Ideale per schermi grandi e proiezioni.</div>
+      <div class="badge-device">Monitor & Proiettore</div>
+    </a>
+
+    <!-- Versione Mobile (Touch) -->
+    <a href="index2.html" class="choice-card" id="mobileChoice">
+      <div class="icon">📱</div>>
+      <div class="device-name">Mobile / Tablet</div>
+      <div class="device-desc">Scrolling verticale, testi leggibili, bottoni touch-friendly. Perfetto per smartphone e presentazioni in mobilità.</div>
+      <div class="badge-device">Smartphone & iPad</div>
+    </a>
+  </div>
+
+  <div class="info-note">
+    <div class="note-item"><span>💡</span> Suggerimento: la versione mobile si adatta automaticamente allo schermo</div>
+    <div class="note-item"><span>⌨️</span> Entrambe supportano tasti freccia / swipe touch</div>
+  </div>
+</div>
+
+<script>
+  // Rilevamento automatico dispositivo (opzionale, per suggerire ma non obbligatorio)
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  const desktopCard = document.getElementById('desktopChoice');
+  const mobileCard = document.getElementById('mobileChoice');
+
+  // Aggiunge un piccolo effetto visivo di suggerimento: se è mobile, bordino più brillante su mobileCard
+  if (isMobile) {
+    mobileCard.style.borderColor = 'var(--cyan)';
+    mobileCard.style.boxShadow = '0 0 0 2px rgba(0,212,255,0.3)';
+  } else {
+    desktopCard.style.borderColor = 'var(--cyan)';
+    desktopCard.style.boxShadow = '0 0 0 2px rgba(0,212,255,0.3)';
+  }
+
+  // Log per sicurezza (opzionale)
+  console.log("Launcher ready — scegli versione");
+</script>
+</body>
+</html>
