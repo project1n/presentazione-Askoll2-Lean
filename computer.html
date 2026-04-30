@@ -9,834 +9,582 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
 :root{
-  --navy:#08192E;
-  --navy2:#0D2340;
-  --navy3:#122B50;
+  --navy:#07192B;
+  --navy2:#0C2240;
   --blue:#007DB4;
   --blue2:#00A8E8;
   --cyan:#00D4FF;
   --white:#FFFFFF;
-  --offwhite:#D8EEFF;
-  --dim:#7AAAC8;
+  --off:#C8E4FF;
+  --dim:#6B9BBF;
   --gold:#F5A623;
   --green:#00C897;
   --red:#FF4D6A;
 }
 
-html,body{
-  width:100%;height:100%;
-  overflow:hidden;
-  background:var(--navy);
-  font-family:'Barlow',sans-serif;
-  color:var(--white);
-}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--navy);font-family:'Barlow',sans-serif;color:var(--white)}
 
-/* ── PROGRESS ── */
-#prog-track{position:fixed;top:0;left:0;width:100%;height:4px;background:rgba(255,255,255,0.07);z-index:500}
-#prog-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--cyan));transition:width .5s ease}
+/* PROGRESS */
+#bar{position:fixed;top:0;left:0;width:100%;height:5px;background:rgba(255,255,255,.08);z-index:500}
+#fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--cyan));transition:width .4s ease}
 
-/* ── LOGO ── */
-#logo{
-  position:fixed;top:24px;right:32px;z-index:400;
-  display:flex;flex-direction:column;align-items:flex-end;
-  pointer-events:none;
-}
-.logo-main{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:800;font-size:32px;letter-spacing:3px;
-  color:var(--white);line-height:1;text-transform:uppercase;
-}
-.logo-main span{color:var(--cyan)}
-.logo-sub{
-  font-size:9px;font-weight:400;letter-spacing:4px;
-  color:var(--blue2);text-transform:uppercase;margin-top:2px;
-}
+/* LOGO */
+#logo{position:fixed;top:26px;right:36px;z-index:400;pointer-events:none;text-align:right}
+.lmain{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:36px;letter-spacing:3px;color:var(--white);line-height:1;text-transform:uppercase}
+.lmain .la{color:var(--cyan)}
+.lmain .ln{font-size:22px;color:var(--blue2);vertical-align:super;margin-left:1px}
+.lsub{font-size:10px;font-weight:400;letter-spacing:4px;color:var(--blue2);text-transform:uppercase;margin-top:3px}
 
-/* ── COUNTER ── */
-#counter{
-  position:fixed;bottom:28px;left:36px;z-index:400;
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:15px;font-weight:600;letter-spacing:3px;
-  color:var(--dim);
-}
+/* COUNTER */
+#counter{position:fixed;bottom:30px;left:40px;z-index:400;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:600;letter-spacing:3px;color:var(--dim)}
 #counter b{color:var(--white)}
 
-/* ── NAV ── */
-#nav{
-  position:fixed;bottom:22px;right:32px;z-index:400;
-  display:flex;gap:12px;
-}
-.nbtn{
-  width:52px;height:52px;border-radius:50%;
-  border:1.5px solid rgba(0,168,232,.4);
-  background:rgba(0,125,180,.15);
-  color:var(--white);font-size:20px;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  transition:all .25s;
-  backdrop-filter:blur(8px);
-}
-.nbtn:hover{background:var(--blue);border-color:var(--blue);transform:scale(1.1)}
-.nbtn:active{transform:scale(.95)}
+/* NAV */
+#nav{position:fixed;bottom:22px;right:36px;z-index:400;display:flex;gap:12px}
+.nb{width:54px;height:54px;border-radius:50%;border:1.5px solid rgba(0,168,232,.4);background:rgba(0,125,180,.15);color:var(--white);font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .22s;backdrop-filter:blur(8px)}
+.nb:hover{background:var(--blue);border-color:var(--blue);transform:scale(1.1)}
+.nb:active{transform:scale(.94)}
 
-/* ── DECK ── */
+/* DECK */
 #deck{position:relative;width:100vw;height:100vh}
 
-/* ── SLIDE BASE ── */
-.slide{
-  position:absolute;inset:0;
-  display:flex;flex-direction:column;justify-content:center;
-  padding:80px 100px 90px 88px;
-  opacity:0;pointer-events:none;
-  transition:opacity .55s cubic-bezier(.4,0,.2,1);
-}
-.slide.active{opacity:1;pointer-events:all}
+/* SLIDE */
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:90px 110px 100px 100px;opacity:0;pointer-events:none;transition:opacity .5s ease,transform .5s ease;transform:translateX(50px)}
+.slide.active{opacity:1;pointer-events:all;transform:translateX(0)}
+.slide.out{opacity:0;transform:translateX(-50px)}
 
-/* ── SLIDE BG VARIANTS ── */
-.bg-cover{background:radial-gradient(ellipse 80% 80% at 70% 50%,#1A3A6E 0%,var(--navy) 65%)}
-.bg-dark{background:linear-gradient(150deg,#0D2340 0%,var(--navy) 100%)}
-.bg-divider{
-  background:linear-gradient(140deg,#0F2548 0%,#091C36 100%);
-  justify-content:center;
-}
+/* BG */
+.dark{background:radial-gradient(ellipse 90% 80% at 65% 40%,#102440 0%,var(--navy) 70%)}
+.divbg{background:linear-gradient(140deg,#0E2448 0%,#081A2E 100%)}
+.cover{background:radial-gradient(ellipse 80% 90% at 70% 50%,#183A70 0%,var(--navy) 65%)}
 
-/* ── GEOMETRIC DECO ── */
+/* GEO */
 .geo{position:absolute;border-radius:50%;pointer-events:none}
-.g1{width:700px;height:700px;right:-180px;top:-180px;border:1px solid rgba(0,168,232,.06)}
-.g2{width:480px;height:480px;right:-80px;top:-80px;border:1px solid rgba(0,168,232,.1)}
-.g3{width:260px;height:260px;right:70px;top:70px;border:1px solid rgba(0,168,232,.16)}
-.gdot{width:10px;height:10px;border-radius:50%;background:var(--cyan);right:195px;top:193px}
+.g1{width:750px;height:750px;right:-200px;top:-200px;border:1px solid rgba(0,168,232,.05)}
+.g2{width:500px;height:500px;right:-90px;top:-90px;border:1px solid rgba(0,168,232,.09)}
+.g3{width:280px;height:280px;right:60px;top:60px;border:1px solid rgba(0,168,232,.14)}
+.gdot{width:11px;height:11px;background:var(--cyan);right:196px;top:196px}
 
-/* ── ANIMATION SYSTEM ── */
-/* Every .anim child starts hidden, JS adds .revealed to parent to trigger */
-.anim{opacity:0;transform:translateY(28px);transition:opacity .55s ease,transform .55s ease}
-.anim.up{transform:translateX(-28px)}
-.anim.right{transform:translateX(28px)}
-.anim.fade{transform:none}
-.revealed .anim{opacity:1;transform:none}
+/* ANIM SYSTEM */
+.a{opacity:0;transform:translateY(32px);transition:opacity .6s ease,transform .6s ease}
+.a.up{transform:translateX(-32px)}
+.a.fade{transform:none}
 
-/* stagger delays */
-.anim:nth-child(1){transition-delay:.08s}
-.anim:nth-child(2){transition-delay:.22s}
-.anim:nth-child(3){transition-delay:.36s}
-.anim:nth-child(4){transition-delay:.50s}
-.anim:nth-child(5){transition-delay:.64s}
-.anim:nth-child(6){transition-delay:.78s}
-.anim:nth-child(7){transition-delay:.92s}
-.anim:nth-child(8){transition-delay:1.06s}
+/* LOGO */
+.tag{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:5px;text-transform:uppercase;color:var(--cyan);display:flex;align-items:center;gap:14px;margin-bottom:22px}
+.tag::before{content:'';width:36px;height:2px;background:var(--cyan);flex-shrink:0}
 
-/* also allow nested anim groups */
-.anim-group{display:contents}
+/* TITLES */
+h1{font-family:'Barlow Condensed',sans-serif;font-weight:800;line-height:1.0;color:var(--white);margin-bottom:24px}
+.t-huge{font-size:clamp(70px,8vw,110px)}
+.t-big{font-size:clamp(58px,6.5vw,88px)}
+.t-med{font-size:clamp(50px,5.5vw,74px)}
+.hi{color:var(--cyan)}
+.hi-g{color:var(--green)}
+.hi-r{color:var(--red)}
+.hi-gold{color:var(--gold)}
 
-/* ── TYPOGRAPHY ── */
-.tag{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:13px;font-weight:700;letter-spacing:5px;
-  text-transform:uppercase;color:var(--cyan);
-  display:flex;align-items:center;gap:12px;margin-bottom:20px;
-}
-.tag::before{content:'';width:32px;height:2px;background:var(--cyan);display:block}
+/* BODY TEXT */
+.body{font-size:clamp(22px,2.4vw,30px);font-weight:300;line-height:1.6;color:var(--off);max-width:880px}
+.body b{color:var(--white);font-weight:700}
+.body-sm{font-size:clamp(19px,2vw,25px);font-weight:300;line-height:1.65;color:var(--off)}
+.body-sm b{color:var(--white);font-weight:700}
 
-h1{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:clamp(52px,5.5vw,80px);
-  font-weight:800;line-height:1.0;
-  color:var(--white);margin-bottom:20px;
-  max-width:820px;
-}
-h1 .hi{color:var(--cyan)}
+/* QUOTE */
+.quote{border-left:5px solid var(--cyan);padding:20px 30px;background:rgba(0,212,255,.06);border-radius:0 12px 12px 0;font-style:italic;font-size:clamp(22px,2.4vw,30px);font-weight:300;color:var(--off);line-height:1.6;max-width:860px}
 
-.lead{
-  font-size:clamp(19px,1.9vw,24px);
-  font-weight:300;line-height:1.65;
-  color:var(--dim);max-width:680px;
-  margin-bottom:32px;
-}
-.lead b{color:var(--white);font-weight:600}
+/* LIST */
+.lst{display:flex;flex-direction:column;gap:22px;max-width:900px}
+.li{display:flex;gap:20px;align-items:flex-start}
+.dot{width:11px;height:11px;border-radius:50%;background:var(--cyan);margin-top:12px;flex-shrink:0}
+.dot-g{background:var(--green)}
+.dot-r{background:var(--red)}
+.dot-gold{background:var(--gold)}
+.lt{font-size:clamp(21px,2.2vw,28px);font-weight:400;line-height:1.55;color:var(--off)}
+.lt b{color:var(--white);font-weight:700}
 
-.quote{
-  border-left:4px solid var(--cyan);
-  padding:16px 26px;
-  background:rgba(0,212,255,.06);
-  border-radius:0 10px 10px 0;
-  font-style:italic;
-  font-size:clamp(18px,1.8vw,22px);
-  font-weight:300;color:var(--offwhite);
-  line-height:1.6;max-width:700px;
-}
+/* DIVIDER SLIDE */
+.div-module{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:7px;text-transform:uppercase;color:var(--blue2);margin-bottom:20px}
+.div-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(68px,8vw,110px);font-weight:800;line-height:1.0;color:var(--white);max-width:900px}
+.div-sub{font-size:clamp(20px,2.1vw,26px);font-weight:300;color:var(--dim);max-width:640px;line-height:1.6;margin-top:20px}
+.div-n{position:absolute;right:50px;bottom:-20px;font-family:'Barlow Condensed',sans-serif;font-size:280px;font-weight:800;color:rgba(255,255,255,.025);line-height:1;pointer-events:none;user-select:none}
 
-/* ── CARDS ── */
-.cards{display:grid;gap:16px;width:100%}
-.cards-2{grid-template-columns:1fr 1fr}
-.cards-3{grid-template-columns:1fr 1fr 1fr}
+/* CARDS LARGE */
+.card-lg{background:rgba(255,255,255,.05);border:1px solid rgba(0,168,232,.22);border-radius:16px;padding:32px 36px;position:relative;overflow:hidden}
+.card-lg::after{content:'';position:absolute;top:0;left:0;width:100%;height:4px;background:linear-gradient(90deg,var(--blue),var(--cyan))}
+.cn{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:4px;color:var(--blue2);text-transform:uppercase;margin-bottom:10px}
+.ct{font-family:'Barlow Condensed',sans-serif;font-size:clamp(24px,2.5vw,32px);font-weight:700;color:var(--white);margin-bottom:10px;line-height:1.2}
+.cb{font-size:clamp(17px,1.7vw,21px);font-weight:300;line-height:1.55;color:var(--dim)}
+.cb b{color:var(--off);font-weight:600}
 
-.card{
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(0,168,232,.2);
-  border-radius:14px;padding:26px 28px;
-  position:relative;overflow:hidden;
-}
-.card::after{
-  content:'';position:absolute;top:0;left:0;
-  width:100%;height:3px;
-  background:linear-gradient(90deg,var(--blue),var(--cyan));
-}
-.card-num{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:11px;font-weight:700;letter-spacing:4px;
-  color:var(--blue2);text-transform:uppercase;margin-bottom:8px;
-}
-.card-title{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:clamp(18px,1.8vw,22px);font-weight:700;
-  color:var(--white);margin-bottom:8px;line-height:1.2;
-}
-.card-body{
-  font-size:clamp(14px,1.35vw,17px);
-  font-weight:300;line-height:1.55;color:var(--dim);
-}
-.card-body b{color:var(--offwhite);font-weight:600}
+/* GRID 3 */
+.g3c{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;max-width:1100px;width:100%}
+.g2c{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:1100px;width:100%}
 
-/* ── LIST ITEMS ── */
-.ilist{display:flex;flex-direction:column;gap:16px}
-.iitem{display:flex;gap:16px;align-items:flex-start}
-.idot{
-  width:9px;height:9px;border-radius:50%;
-  background:var(--cyan);margin-top:9px;flex-shrink:0;
-}
-.itext{
-  font-size:clamp(16px,1.6vw,20px);
-  font-weight:400;line-height:1.55;color:var(--offwhite);
-}
-.itext b{color:var(--white);font-weight:700}
+/* COMPARE */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:1100px;width:100%}
+.cmp-c{border-radius:16px;padding:30px 34px;border:1px solid}
+.bad{background:rgba(255,77,106,.07);border-color:rgba(255,77,106,.3)}
+.good{background:rgba(0,200,151,.07);border-color:rgba(0,200,151,.3)}
+.cmp-h{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:4px;text-transform:uppercase;margin-bottom:20px}
+.bad .cmp-h{color:var(--red)}.good .cmp-h{color:var(--green)}
 
-/* ── TWO COL ── */
-.twocol{display:grid;grid-template-columns:1fr 1fr;gap:40px;width:100%;max-width:1100px;align-items:start}
+/* STOCK CARDS */
+.stk{border-radius:16px;padding:28px 32px;border:1px solid;flex:1}
+.stk.cy{background:rgba(0,200,151,.09);border-color:rgba(0,200,151,.35)}
+.stk.bu{background:rgba(0,168,232,.09);border-color:rgba(0,168,232,.35)}
+.stk.sf{background:rgba(245,166,35,.09);border-color:rgba(245,166,35,.35)}
+.slb{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:4px;text-transform:uppercase;margin-bottom:8px}
+.cy .slb{color:var(--green)}.bu .slb{color:var(--cyan)}.sf .slb{color:var(--gold)}
+.stn{font-family:'Barlow Condensed',sans-serif;font-size:clamp(24px,2.5vw,32px);font-weight:700;color:var(--white);margin-bottom:10px}
+.std{font-size:clamp(16px,1.6vw,20px);color:var(--dim);line-height:1.5}
 
-/* ── STEP LIST ── */
-.slist{display:flex;flex-direction:column;gap:18px}
-.sitem{display:flex;gap:20px;align-items:flex-start}
-.snum{
-  width:38px;height:38px;border-radius:50%;flex-shrink:0;
-  background:rgba(0,125,180,.25);border:1.5px solid rgba(0,168,232,.4);
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:700;font-size:16px;color:var(--cyan);
-  margin-top:2px;
-}
-.stitle{font-family:'Barlow Condensed',sans-serif;font-size:clamp(17px,1.6vw,20px);font-weight:700;color:var(--white);margin-bottom:4px}
-.sdesc{font-size:clamp(14px,1.3vw,16px);color:var(--dim);line-height:1.5}
+/* PDCA */
+.pdca{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:700px}
+.pb{border-radius:14px;padding:26px 28px;border:1px solid}
+.pb.pl{background:rgba(0,125,180,.12);border-color:rgba(0,168,232,.4)}
+.pb.pd{background:rgba(0,200,151,.1);border-color:rgba(0,200,151,.35)}
+.pb.pc{background:rgba(245,166,35,.1);border-color:rgba(245,166,35,.35)}
+.pb.pa{background:rgba(255,77,106,.09);border-color:rgba(255,77,106,.3)}
+.pl-l{font-family:'Barlow Condensed',sans-serif;font-size:64px;font-weight:800;line-height:1;margin-bottom:6px}
+.pb.pl .pl-l{color:var(--cyan)}.pb.pd .pl-l{color:var(--green)}.pb.pc .pl-l{color:var(--gold)}.pb.pa .pl-l{color:var(--red)}
+.pw{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--white);margin-bottom:8px}
+.pd2{font-size:clamp(15px,1.5vw,18px);color:var(--dim);line-height:1.5}
 
-/* ── COMPARE ── */
-.cmp{display:grid;grid-template-columns:1fr 1fr;gap:18px;width:100%;max-width:1060px}
-.cmp-col{border-radius:14px;padding:26px 28px;border:1px solid}
-.cmp-bad{background:rgba(255,77,106,.07);border-color:rgba(255,77,106,.3)}
-.cmp-good{background:rgba(0,200,151,.07);border-color:rgba(0,200,151,.3)}
-.cmp-head{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:13px;font-weight:700;letter-spacing:3px;
-  text-transform:uppercase;margin-bottom:18px;
-}
-.cmp-bad .cmp-head{color:var(--red)}
-.cmp-good .cmp-head{color:var(--green)}
+/* INFO / WARN */
+.info{background:rgba(0,168,232,.08);border:1px solid rgba(0,168,232,.25);border-radius:12px;padding:20px 26px;display:flex;gap:14px;align-items:flex-start;max-width:1000px}
+.ii{font-size:22px;color:var(--cyan);flex-shrink:0;margin-top:2px}
+.it{font-size:clamp(18px,1.9vw,23px);color:var(--off);line-height:1.55}
+.it b{color:var(--cyan)}
+.warn{background:rgba(255,77,106,.08);border:1px solid rgba(255,77,106,.3);border-radius:12px;padding:20px 26px;display:flex;gap:14px;align-items:flex-start;max-width:1000px}
+.wi{font-size:22px;color:var(--red);flex-shrink:0;margin-top:2px}
+.wt{font-size:clamp(18px,1.9vw,23px);color:#ffbbcc;line-height:1.55}
+.wt b{color:var(--red)}
 
-/* ── STOCKS ── */
-.stocks{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:1000px;width:100%}
-.scard{border-radius:14px;padding:24px 26px;border:1px solid}
-.scard.cycle{background:rgba(0,200,151,.09);border-color:rgba(0,200,151,.35)}
-.scard.buffer{background:rgba(0,168,232,.09);border-color:rgba(0,168,232,.35)}
-.scard.safety{background:rgba(245,166,35,.09);border-color:rgba(245,166,35,.35)}
-.slabel{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;margin-bottom:6px}
-.cycle .slabel{color:var(--green)}.buffer .slabel{color:var(--cyan)}.safety .slabel{color:var(--gold)}
-.stname{font-family:'Barlow Condensed',sans-serif;font-size:clamp(20px,2vw,26px);font-weight:700;color:var(--white);margin-bottom:8px}
-.stdesc{font-size:clamp(14px,1.35vw,16px);color:var(--dim);line-height:1.5}
+/* FLOW */
+.flow{display:flex;align-items:center;width:100%;max-width:1060px}
+.fb{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(0,168,232,.25);border-radius:12px;padding:18px 14px;text-align:center;min-width:0}
+.fb.ac{background:rgba(0,125,180,.28);border-color:var(--blue)}
+.ft{font-family:'Barlow Condensed',sans-serif;font-size:clamp(16px,1.6vw,20px);font-weight:700;color:var(--white);margin-bottom:4px}
+.fb.ac .ft{color:var(--cyan)}
+.fs{font-size:clamp(12px,1.2vw,15px);color:var(--dim)}
+.fa{color:var(--blue2);font-size:28px;flex-shrink:0;padding:0 8px}
 
-/* ── PDCA ── */
-.pdca{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:600px}
-.pbox{border-radius:12px;padding:22px 24px;border:1px solid}
-.pbox.plan{background:rgba(0,125,180,.12);border-color:rgba(0,168,232,.4)}
-.pbox.do{background:rgba(0,200,151,.1);border-color:rgba(0,200,151,.35)}
-.pbox.check{background:rgba(245,166,35,.1);border-color:rgba(245,166,35,.35)}
-.pbox.act{background:rgba(255,77,106,.09);border-color:rgba(255,77,106,.3)}
-.pletter{font-family:'Barlow Condensed',sans-serif;font-size:52px;font-weight:800;line-height:1;margin-bottom:4px}
-.plan .pletter{color:var(--cyan)}.do .pletter{color:var(--green)}.check .pletter{color:var(--gold)}.act .pletter{color:var(--red)}
-.pword{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--white);margin-bottom:8px}
-.pdesc{font-size:clamp(13px,1.25vw,15px);color:var(--dim);line-height:1.5}
+/* TAKT BOX */
+.takt{background:rgba(0,125,180,.14);border:1px solid rgba(0,168,232,.35);border-radius:14px;padding:28px;text-align:center;max-width:500px}
+.tt{font-family:'Barlow Condensed',sans-serif;font-size:clamp(20px,2vw,26px);font-weight:700;color:var(--white)}
+.td{border-top:2.5px solid var(--cyan);margin:14px 50px}
+.te{font-size:clamp(14px,1.4vw,18px);color:var(--dim);margin-top:10px}
 
-/* ── FLOW ROW ── */
-.flow{display:flex;align-items:center;width:100%;max-width:1020px;gap:0}
-.fbox{
-  flex:1;background:rgba(255,255,255,.06);
-  border:1px solid rgba(0,168,232,.25);
-  border-radius:10px;padding:14px 12px;text-align:center;min-width:0;
-}
-.fbox.acc{background:rgba(0,125,180,.25);border-color:var(--blue)}
-.ftitle{font-family:'Barlow Condensed',sans-serif;font-size:clamp(14px,1.4vw,17px);font-weight:700;color:var(--white);margin-bottom:3px}
-.fbox.acc .ftitle{color:var(--cyan)}
-.fsub{font-size:clamp(11px,1.1vw,13px);color:var(--dim)}
-.farr{color:var(--blue2);font-size:24px;flex-shrink:0;padding:0 6px}
+/* VOC */
+.voc{display:flex;align-items:center;gap:16px;max-width:700px;margin-bottom:24px}
+.vb{background:rgba(0,125,180,.15);border:1px solid rgba(0,168,232,.3);border-radius:14px;padding:22px 26px;flex:1;text-align:center}
+.vl{font-family:'Barlow Condensed',sans-serif;font-size:clamp(20px,2vw,26px);font-weight:700;color:var(--white)}
+.vs{font-size:clamp(13px,1.3vw,16px);color:var(--dim);margin-top:4px}
+.vc{background:rgba(0,212,255,.12);border:1.5px solid rgba(0,212,255,.4);border-radius:50%;width:110px;height:110px;flex-shrink:0;display:flex;align-items:center;justify-content:center;text-align:center}
+.vcl{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--cyan);line-height:1.25;text-transform:uppercase}
 
-/* ── VOC DIAGRAM ── */
-.voc{display:flex;align-items:center;gap:14px;max-width:620px}
-.vbox{
-  background:rgba(0,125,180,.15);border:1px solid rgba(0,168,232,.3);
-  border-radius:12px;padding:18px 20px;flex:1;text-align:center;
-}
-.vlab{font-family:'Barlow Condensed',sans-serif;font-size:clamp(16px,1.5vw,20px);font-weight:700;color:var(--white)}
-.vsub{font-size:12px;color:var(--dim);margin-top:3px}
-.vcenter{
-  background:rgba(0,212,255,.12);border:1.5px solid rgba(0,212,255,.4);
-  border-radius:50%;width:100px;height:100px;flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;text-align:center;
-}
-.vclab{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--cyan);line-height:1.2;text-transform:uppercase}
+/* BADGES */
+.badges{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.badge{background:rgba(0,125,180,.2);border:1px solid rgba(0,168,232,.3);border-radius:8px;padding:10px 20px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:1.5px;color:var(--cyan)}
 
-/* ── INFO / WARN BOXES ── */
-.info{
-  background:rgba(0,168,232,.08);border:1px solid rgba(0,168,232,.25);
-  border-radius:10px;padding:16px 20px;
-  display:flex;gap:12px;align-items:flex-start;max-width:900px;
-}
-.info-i{font-size:18px;color:var(--cyan);flex-shrink:0;margin-top:2px}
-.info-t{font-size:clamp(14px,1.35vw,17px);color:var(--offwhite);line-height:1.55}
-.info-t b{color:var(--cyan)}
+/* HBOX */
+.hbox{background:rgba(0,125,180,.12);border:1px solid rgba(0,168,232,.3);border-radius:14px;padding:26px 30px}
+.hbt{font-family:'Barlow Condensed',sans-serif;font-size:clamp(20px,2vw,26px);font-weight:700;color:var(--cyan);margin-bottom:12px}
+.hbb{font-size:clamp(17px,1.7vw,21px);color:var(--dim);line-height:1.6}
+.hbb b{color:var(--off)}
 
-.warn{
-  background:rgba(255,77,106,.08);border:1px solid rgba(255,77,106,.3);
-  border-radius:10px;padding:16px 20px;
-  display:flex;gap:12px;align-items:flex-start;max-width:900px;
-}
-.warn-i{font-size:18px;color:var(--red);flex-shrink:0;margin-top:2px}
-.warn-t{font-size:clamp(14px,1.35vw,17px);color:#ffaabc;line-height:1.55}
-.warn-t b{color:var(--red)}
-
-/* ── METHOD CARDS ── */
-.methods{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:1000px;width:100%}
-.mcard{border-radius:12px;padding:20px 22px;border:1px solid}
-.mcard.kanban{background:rgba(0,200,151,.08);border-color:rgba(0,200,151,.3)}
-.mcard.jit{background:rgba(0,125,180,.1);border-color:rgba(0,168,232,.3)}
-.mcard.mrp{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1)}
-.mname{font-family:'Barlow Condensed',sans-serif;font-size:clamp(17px,1.6vw,21px);font-weight:700;margin-bottom:8px}
-.kanban .mname{color:var(--green)}.jit .mname{color:var(--cyan)}.mrp .mname{color:var(--dim)}
-.mdetail{font-size:clamp(13px,1.25vw,15px);color:var(--dim);line-height:1.5}
-
-/* ── AGENDA ── */
-.agenda{display:grid;grid-template-columns:1fr 1fr;gap:13px;max-width:900px;width:100%}
-.agitem{display:flex;gap:16px;align-items:flex-start;padding:16px 20px;background:rgba(255,255,255,.04);border:1px solid rgba(0,168,232,.15);border-radius:12px}
-.agnum{font-family:'Barlow Condensed',sans-serif;font-size:38px;font-weight:800;color:rgba(0,168,232,.25);line-height:1;min-width:38px}
-.agtitle{font-family:'Barlow Condensed',sans-serif;font-size:clamp(17px,1.6vw,20px);font-weight:700;color:var(--white)}
-.agsub{font-size:clamp(12px,1.2vw,14px);color:var(--dim);margin-top:3px}
-
-/* ── DIVIDER SLIDE ── */
-.div-label{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:6px;text-transform:uppercase;color:var(--blue2);margin-bottom:18px}
-.div-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(60px,7vw,100px);font-weight:800;color:var(--white);line-height:1.0;max-width:860px}
-.div-sub{font-size:clamp(18px,1.8vw,22px);font-weight:300;color:var(--dim);max-width:620px;line-height:1.6;margin-top:18px}
-.div-bign{
-  position:absolute;right:40px;bottom:-10px;
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:220px;font-weight:800;
-  color:rgba(255,255,255,.03);line-height:1;
-  pointer-events:none;user-select:none;
-}
-
-/* ── BADGES ── */
-.badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
-.badge{
-  background:rgba(0,125,180,.2);border:1px solid rgba(0,168,232,.3);
-  border-radius:7px;padding:9px 18px;
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:14px;font-weight:700;letter-spacing:1.5px;color:var(--cyan);
-}
-
-/* ── HIGHLIGHT BOX ── */
-.hbox{
-  background:rgba(0,125,180,.12);border:1px solid rgba(0,168,232,.3);
-  border-radius:12px;padding:20px 24px;
-}
-.hbox-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(16px,1.5vw,19px);font-weight:700;color:var(--cyan);margin-bottom:10px}
-.hbox-body{font-size:clamp(13px,1.3vw,16px);color:var(--dim);line-height:1.6}
-.hbox-body b{color:var(--offwhite)}
-
-/* ── TAKT BOX ── */
-.takt{
-  background:rgba(0,125,180,.15);border:1px solid rgba(0,168,232,.35);
-  border-radius:12px;padding:20px;text-align:center;
-}
-.takt-t{font-family:'Barlow Condensed',sans-serif;font-size:clamp(16px,1.5vw,20px);font-weight:700;color:var(--white)}
-.takt-div{border-top:2px solid var(--cyan);margin:10px 40px}
-.takt-eq{font-size:clamp(12px,1.2vw,14px);color:var(--dim);margin-top:8px}
-
-/* ── SUPERMARKET BOXES ── */
-.smbox{border-radius:12px;padding:20px 24px;border:1px solid}
-.smbox.blue{background:rgba(0,125,180,.12);border-color:rgba(0,168,232,.3)}
-.smbox.green{background:rgba(0,200,151,.08);border-color:rgba(0,200,151,.25)}
-.smbox.gold{background:rgba(245,166,35,.08);border-color:rgba(245,166,35,.25)}
-.smbox-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(16px,1.5vw,19px);font-weight:700;margin-bottom:10px}
-.smbox.blue .smbox-title{color:var(--cyan)}
-.smbox.green .smbox-title{color:var(--green)}
-.smbox.gold .smbox-title{color:var(--gold)}
-.smbox-body{font-size:clamp(13px,1.3vw,15px);color:var(--dim);line-height:1.55}
-.smbox-body b{color:var(--offwhite)}
+/* STEP LIST */
+.sl{display:flex;flex-direction:column;gap:22px;max-width:950px}
+.si{display:flex;gap:22px;align-items:flex-start}
+.sn{width:42px;height:42px;border-radius:50%;background:rgba(0,125,180,.25);border:1.5px solid rgba(0,168,232,.4);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;color:var(--cyan);flex-shrink:0;margin-top:3px}
+.sti{font-family:'Barlow Condensed',sans-serif;font-size:clamp(19px,1.9vw,24px);font-weight:700;color:var(--white);margin-bottom:5px}
+.sde{font-size:clamp(16px,1.6vw,20px);color:var(--dim);line-height:1.5}
 </style>
 </head>
 <body>
 
-<div id="prog-track"><div id="prog-fill"></div></div>
+<div id="bar"><div id="fill"></div></div>
 
 <div id="logo">
-  <div class="logo-main"><span>A</span>skoll<span style="color:var(--blue2);font-size:24px;vertical-align:super;margin-left:2px">2</span></div>
-  <div class="logo-sub">Aquarium &amp; Pond</div>
+  <div class="lmain"><span class="la">A</span>skoll2</div>
+  <div class="lsub">Aquarium &amp; Pond</div>
 </div>
 
-<div id="counter"><b id="cur">1</b> / <span id="tot">20</span></div>
+<div id="counter"><b id="cur">1</b> / <span id="tot"></span></div>
 
 <div id="nav">
-  <button class="nbtn" onclick="prev()">&#8592;</button>
-  <button class="nbtn" onclick="next()">&#8594;</button>
+  <button class="nb" onclick="prev()">&#8592;</button>
+  <button class="nb" onclick="next()">&#8594;</button>
 </div>
 
 <div id="deck">
 
-<!-- ══════════════════════════════════════════════════
-     SLIDE 1 — COVER
-═══════════════════════════════════════════════════ -->
-<div class="slide bg-cover active" data-anim>
+<!-- ═══════ 1 · COVER ═══════ -->
+<div class="slide cover active">
   <div class="geo g1"></div><div class="geo g2"></div><div class="geo g3"></div><div class="geo gdot"></div>
-  <div class="anim up" style="margin-bottom:18px">
-    <div class="tag">Corso Aziendale · 2026</div>
-  </div>
-  <div class="anim" style="margin-bottom:16px">
-    <h1 style="font-size:clamp(56px,6.5vw,90px)">Costruire un<br><span class="hi">Lean Fulfillment</span><br>Stream</h1>
-  </div>
-  <div class="anim">
-    <p class="lead" style="margin-bottom:28px">Trasformare la Supply Chain da statica a dinamica.<br>Dal fornitore al cliente, <b>senza sprechi</b>.</p>
-  </div>
-  <div class="anim">
-    <div class="quote">"Comprendere il costo totale significa cambiare il modo di pensare dei Manager."</div>
-  </div>
+  <div class="a up"><div class="tag">Corso Aziendale · 2026</div></div>
+  <div class="a"><h1 class="t-huge">Costruire un<br><span class="hi">Lean Fulfillment</span><br>Stream</h1></div>
+  <div class="a"><p class="body" style="margin-bottom:32px">Trasformare la Supply Chain da statica a dinamica.<br>Dal fornitore al cliente, <b>senza sprechi</b>.</p></div>
+  <div class="a"><div class="quote">"Comprendere il costo totale significa<br>cambiare il modo di pensare dei Manager."</div></div>
 </div>
 
-<!-- ══════════════════════════════════════════════════
-     SLIDE 2 — AGENDA
-═══════════════════════════════════════════════════ -->
-<div class="slide bg-dark" data-anim>
+<!-- ═══════ 2 · AGENDA ═══════ -->
+<div class="slide dark">
   <div class="geo g1" style="opacity:.4"></div>
-  <div class="anim up"><div class="tag">Programma del Corso</div></div>
-  <div class="anim"><h1 style="font-size:54px;margin-bottom:24px">Cosa affronteremo <span class="hi">oggi</span></h1></div>
-  <div class="agenda anim">
-    <div class="agitem"><div class="agnum">01</div><div><div class="agtitle">Cos'è il LFS</div><div class="agsub">Definizione, visione, principi Lean</div></div></div>
-    <div class="agitem"><div class="agnum">02</div><div><div class="agtitle">Mappare il Flusso</div><div class="agsub">Stato attuale → futuro, le 6 aree</div></div></div>
-    <div class="agitem"><div class="agnum">03</div><div><div class="agtitle">Domanda del Cliente</div><div class="agsub">VOC, Takt Time, sistema Pull</div></div></div>
-    <div class="agitem"><div class="agnum">04</div><div><div class="agtitle">Logistica in Uscita</div><div class="agsub">Scorte, spedizioni, Milk Run</div></div></div>
-    <div class="agitem"><div class="agnum">05</div><div><div class="agtitle">Logistica in Entrata</div><div class="agsub">PFEP, Kanban, Supermarket, Baia</div></div></div>
-    <div class="agitem"><div class="agnum">06</div><div><div class="agtitle">PDCA &amp; A3</div><div class="agsub">Miglioramento continuo e problem solving</div></div></div>
+  <div class="a up"><div class="tag">Programma</div></div>
+  <div class="a"><h1 class="t-med" style="margin-bottom:28px">Cosa affronteremo <span class="hi">oggi</span></h1></div>
+  <div class="g2c a" style="max-width:980px">
+    <div class="card-lg"><div class="cn">01</div><div class="ct">Cos'è il LFS</div><div class="cb">Definizione, visione d'insieme, principi Lean</div></div>
+    <div class="card-lg"><div class="cn">02</div><div class="ct">Mappare il Flusso</div><div class="cb">Stato attuale → futuro, le 6 aree</div></div>
+    <div class="card-lg"><div class="cn">03</div><div class="ct">Domanda del Cliente</div><div class="cb">VOC, Takt Time, sistema Pull</div></div>
+    <div class="card-lg"><div class="cn">04</div><div class="ct">Logistica in Uscita</div><div class="cb">Scorte, spedizioni, Milk Run</div></div>
+    <div class="card-lg"><div class="cn">05</div><div class="ct">Logistica in Entrata</div><div class="cb">PFEP, Kanban, Supermarket, Baia</div></div>
+    <div class="card-lg"><div class="cn">06</div><div class="ct">PDCA &amp; A3</div><div class="cb">Miglioramento continuo e problem solving</div></div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════════
-     SLIDE 3 — DIVIDER MOD 1
-═══════════════════════════════════════════════════ -->
-<div class="slide bg-divider" data-anim>
-  <div class="geo g1" style="opacity:.35"></div>
-  <div class="anim fade"><div class="div-label">Modulo 01</div></div>
-  <div class="anim"><div class="div-title">Cos'è il Lean<br>Fulfillment Stream</div></div>
-  <div class="anim"><div class="div-sub">Visione d'insieme, principi guida e la metafora del fiume</div></div>
-  <div class="div-bign">01</div>
-</div>
-
-<!-- ══════════════════════════════════════════════════
-     SLIDE 4 — DEFINIZIONE
-═══════════════════════════════════════════════════ -->
-<div class="slide bg-dark" data-anim>
-  <div class="geo g1" style="opacity:.4"></div>
-  <div class="anim up"><div class="tag">La Definizione</div></div>
-  <div class="anim"><h1>Un flusso scorrevole,<br><span class="hi">lineare e agile</span></h1></div>
-  <div class="anim"><p class="lead" style="margin-bottom:24px">Dal fornitore al cliente: materiali che si muovono senza ostacoli.</p></div>
-  <div class="ilist anim" style="max-width:820px;margin-bottom:28px">
-    <div class="iitem"><div class="idot"></div><div class="itext"><b>Abbatte i silos:</b> i Manager escono dai propri uffici e si chiedono quali sono i veri confini del loro lavoro.</div></div>
-    <div class="iitem"><div class="idot"></div><div class="itext"><b>Olia il meccanismo</b> della Supply Chain: passa dalla staticità al dinamismo.</div></div>
-    <div class="iitem"><div class="idot"></div><div class="itext">Il <b>valore per il cliente</b> e il suo tasso di consumo sono le basi di tutto il sistema.</div></div>
-    <div class="iitem"><div class="idot"></div><div class="itext">Richiede un <b>team coeso</b> che lavori oltre le proprie aree di gestione.</div></div>
-  </div>
-  <div class="anim">
-    <div class="quote">"La barca corre veloce lungo il fiume, rimuove le rotte con gradualità e definitivamente lungo il percorso."</div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════════════
-     SLIDE 5 — PRINCIPI LEAN
-═══════════════════════════════════════════════════ -->
-<div class="slide bg-dark" data-anim>
-  <div class="anim up"><div class="tag">I Fondamentali</div></div>
-  <div class="anim"><h1 style="margin-bottom:10px">I <span class="hi">Principi Guida</span> della Lean</h1></div>
-  <div class="anim"><p class="lead" style="margin-bottom:26px">Le fondamenta per costruire la casa del Lean Fulfillment Stream.</p></div>
-  <div class="cards cards-3 anim" style="max-width:1080px">
-    <div class="card">
-      <div class="card-num">Principio 01</div>
-      <div class="card-title">Identifica il Valore</div>
-      <div class="card-body">Cosa è importante per il cliente? Tutto ciò che il cliente non percepisce come valore è <b>spreco da eliminare</b>.</div>
-    </div>
-    <div class="card">
-      <div class="card-num">Principio 02</div>
-      <div class="card-title">Elimina gli Sprechi</div>
-      <div class="card-body">Magazzini eccessivi, attese, trasporti inutili, ispezioni ridondanti. Ogni spreco ha un <b>costo che non si vede subito</b>.</div>
-    </div>
-    <div class="card">
-      <div class="card-num">Principio 03</div>
-      <div class="card-title">Insegui la Perfezione</div>
-      <div class="card-body">Il miglioramento continuo non ha un traguardo finale. Il <b>PDCA</b> è il motore di questo processo virtuoso.</div>
-    </div>
-  </div>
-  <div class="badges anim">
-    <div class="badge">A3 — Problem Solving</div>
-    <div class="badge">PDCA — Ciclo di Miglioramento</div>
-    <div class="badge">Fulfillment Stream Council</div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════════════
-     SLIDE 6 — PILLOLE DI SAGGEZZA
-═══════════════════════════════════════════════════ -->
-<div class="slide bg-dark" data-anim>
+<!-- ═══════ 3 · DIV 01 ═══════ -->
+<div class="slide divbg">
   <div class="geo g1" style="opacity:.3"></div>
-  <div class="anim up"><div class="tag">Pillole di Saggezza</div></div>
-  <div class="anim"><h1 style="font-size:54px;margin-bottom:20px">Le regole non scritte<br>del <span class="hi">Lean Thinking</span></h1></div>
-  <div class="twocol anim" style="max-width:1020px">
-    <div class="ilist">
-      <div class="iitem"><div class="idot"></div><div class="itext">Il valore per il cliente deve <b>scorrere lungo tutto il processo</b> logistico-produttivo.</div></div>
-      <div class="iitem"><div class="idot"></div><div class="itext"><b>Vai dove le cose accadono</b>: non desumere, non immaginare. Osserva di persona (Gemba).</div></div>
-      <div class="iitem"><div class="idot"></div><div class="itext">Il costo dipende dal <b>tempo totale di risposta</b>, non solo dal tempo di attraversamento.</div></div>
-      <div class="iitem"><div class="idot"></div><div class="itext">I costi di magazzino non dipendono solo dal costo del denaro: ci sono molti <b>fattori nascosti</b>.</div></div>
-    </div>
-    <div class="ilist">
-      <div class="iitem"><div class="idot"></div><div class="itext">La performance si misura sulla <b>probabilità cumulativa degli 8 Giusti</b>.</div></div>
-      <div class="iitem"><div class="idot"></div><div class="itext">Non tutti i risultati sono immediati: <b>alcuni effetti si vedono solo nel medio-lungo termine</b>.</div></div>
-      <div class="iitem"><div class="idot"></div><div class="itext">Focalizzati sempre sul <b>costo totale</b> lungo tutto il processo logistico-produttivo.</div></div>
-      <div class="iitem"><div class="idot"></div><div class="itext">Focalizzarsi sulla domanda reale crea <b>stabilità</b> ed elimina gli sprechi alla fonte.</div></div>
-    </div>
-  </div>
+  <div class="a fade"><div class="div-module">Modulo 01</div></div>
+  <div class="a"><div class="div-title">Cos'è il Lean<br>Fulfillment Stream</div></div>
+  <div class="a"><div class="div-sub">Visione d'insieme, principi guida e la metafora del fiume</div></div>
+  <div class="div-n">01</div>
 </div>
 
-<!-- ══════════════════════════════════════════════════
-     SLIDE 7 — DIVIDER MOD 2
-═══════════════════════════════════════════════════ -->
-<div class="slide bg-divider" data-anim>
+<!-- ═══════ 4 · DEFINIZIONE ═══════ -->
+<div class="slide dark">
+  <div class="geo g1" style="opacity:.4"></div>
+  <div class="a up"><div class="tag">La Definizione</div></div>
+  <div class="a"><h1 class="t-big">Un flusso <span class="hi">scorrevole</span>,<br>lineare e agile</h1></div>
+  <div class="a"><p class="body">Dal fornitore al cliente: materiali che si muovono <b>senza ostacoli</b>, come una barca veloce su un fiume.</p></div>
+</div>
+
+<!-- ═══════ 5 · LA BARCA ═══════ -->
+<div class="slide dark">
+  <div class="a up"><div class="tag">La Metafora</div></div>
+  <div class="a"><h1 class="t-big" style="margin-bottom:28px">La barca <span class="hi">corre</span> sul fiume</h1></div>
+  <div class="a"><div class="quote" style="margin-bottom:32px">"La barca corre veloce lungo il fiume, rimuove le rotte con gradualità e definitivamente lungo il percorso."</div></div>
+  <div class="a"><p class="body">Gli <b>ostacoli sono gli sprechi</b>: vanno rimossi uno alla volta, con metodo e continuità.</p></div>
+</div>
+
+<!-- ═══════ 6 · ABBATTE I SILOS ═══════ -->
+<div class="slide dark">
   <div class="geo g1" style="opacity:.35"></div>
-  <div class="anim fade"><div class="div-label">Modulo 02</div></div>
-  <div class="anim"><div class="div-title">Mappare<br>il Flusso</div></div>
-  <div class="anim"><div class="div-sub">Stato attuale vs. stato futuro e le 6 aree del Fulfillment Stream</div></div>
-  <div class="div-bign">02</div>
+  <div class="a up"><div class="tag">Il Cambiamento Culturale</div></div>
+  <div class="a"><h1 class="t-big">Abbattere i <span class="hi">silos</span></h1></div>
+  <div class="a"><p class="body" style="margin-bottom:30px">I Manager escono dai propri uffici e si chiedono:<br><b>"Quali sono i veri confini del mio lavoro?"</b></p></div>
+  <div class="a"><div class="info"><div class="ii">💡</div><div class="it">Il LFS richiede un <b>team coeso</b> che lavori oltre le proprie aree di gestione. Il <b>valore per il cliente</b> e il suo tasso di consumo sono le basi di tutto.</div></div></div>
 </div>
 
-<!-- ══════════════════════════════════════════════════
-     SLIDE 8 — STATO ATTUALE → FUTURO
-═══════════════════════════════════════════════════ -->
-<div class="slide bg-dark" data-anim>
-  <div class="anim up"><div class="tag">Value Stream Mapping</div></div>
-  <div class="anim"><h1 style="font-size:50px;margin-bottom:8px">Dallo Stato Attuale<br>allo <span class="hi">Stato Futuro</span></h1></div>
-  <div class="anim"><p class="lead" style="margin-bottom:20px">L'analisi deve <b>sempre partire dal cliente</b> e procedere a ritroso lungo tutto il flusso.</p></div>
-  <div class="flow anim" style="margin-bottom:24px">
-    <div class="fbox"><div class="ftitle">Cliente</div><div class="fsub">Punto di partenza</div></div>
-    <div class="farr">←</div>
-    <div class="fbox acc"><div class="ftitle">Logistica Uscita</div><div class="fsub">Spedizioni</div></div>
-    <div class="farr">←</div>
-    <div class="fbox acc"><div class="ftitle">Produzione</div><div class="fsub">Pacemaker Point</div></div>
-    <div class="farr">←</div>
-    <div class="fbox acc"><div class="ftitle">Magazzino</div><div class="fsub">Supermarket</div></div>
-    <div class="farr">←</div>
-    <div class="fbox"><div class="ftitle">Fornitore</div><div class="fsub">Logistica entrata</div></div>
-  </div>
-  <div class="slist anim" style="max-width:900px">
-    <div class="sitem"><div class="snum">1</div><div><div class="stitle">Mappa AS IS — Fotografa il presente</div><div class="sdesc">Dove si accumula scorta? Dove ci sono attese? Dove si spreca tempo? Raccolta dati precisa, senza supposizioni.</div></div></div>
-    <div class="sitem"><div class="snum">2</div><div><div class="stitle">Applica i principi — Identifica le contromisure</div><div class="sdesc">Per ciascuna delle 6 aree definisci azioni concrete basate sui principi guida Lean.</div></div></div>
-    <div class="sitem"><div class="snum">3</div><div><div class="stitle">Mappa TO BE — Obiettivi ambiziosi (es. −7,9% costi totali)</div><div class="sdesc">Interventi in logica A3 + metriche che guardano all'intero fulfillment stream, non al singolo reparto.</div></div></div>
+<!-- ═══════ 7 · 3 PRINCIPI ═══════ -->
+<div class="slide dark">
+  <div class="a up"><div class="tag">I Fondamentali</div></div>
+  <div class="a"><h1 class="t-med" style="margin-bottom:26px">I <span class="hi">3 Principi</span> Guida</h1></div>
+  <div class="g3c a">
+    <div class="card-lg"><div class="cn">Principio 01</div><div class="ct">Identifica il Valore</div><div class="cb">Cosa vuole davvero il cliente? Tutto il resto è <b>spreco da eliminare</b>.</div></div>
+    <div class="card-lg"><div class="cn">Principio 02</div><div class="ct">Elimina gli Sprechi</div><div class="cb">Attese, magazzini gonfiati, trasporti inutili, ispezioni ridondanti. Ogni spreco ha un <b>costo nascosto</b>.</div></div>
+    <div class="card-lg"><div class="cn">Principio 03</div><div class="ct">Insegui la Perfezione</div><div class="cb">Il miglioramento continuo non ha un traguardo finale. Il <b>PDCA è il motore</b> di questo processo.</div></div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════════
-     SLIDE 9 — LE 6 AREE
-═══════════════════════════════════════════════════ -->
-<div class="slide bg-dark" data-anim>
-  <div class="anim up"><div class="tag">Struttura del Flusso</div></div>
-  <div class="anim"><h1 style="font-size:52px;margin-bottom:20px">Le <span class="hi">6 Aree</span> del Fulfillment Stream</h1></div>
-  <div class="cards cards-3 anim" style="max-width:1080px">
-    <div class="card"><div class="card-num">Area 01</div><div class="card-title">Collaborazione con il Cliente</div><div class="card-body">Sistema <b>Pull</b> + flusso livellato sulla domanda reale del cliente.</div></div>
-    <div class="card"><div class="card-num">Area 02</div><div class="card-title">Logistica in Uscita</div><div class="card-body">Consegne al ritmo giornaliero della domanda: <b>Takt Time</b>.</div></div>
-    <div class="card"><div class="card-num">Area 03</div><div class="card-title">Spedizioni &amp; Ricevimento</div><div class="card-body">Pianificare su domanda reale. <b>Lavoro standardizzato</b> degli autisti. Zone gestite con disciplina visiva.</div></div>
-    <div class="card"><div class="card-num">Area 04</div><div class="card-title">Ordini del Materiale</div><div class="card-body"><b>PFEP</b> (Plan For Every Part): ogni articolo ha un metodo predefinito di rifornimento.</div></div>
-    <div class="card"><div class="card-num">Area 05</div><div class="card-title">Supermarket</div><div class="card-body">Più vicino possibile al punto di utilizzo. Rifornimento automatico con <b>Kanban</b>.</div></div>
-    <div class="card"><div class="card-num">Area 06</div><div class="card-title">Collaborazione Fornitori</div><div class="card-body">Allineare fornitore e cliente alla <b>stessa domanda reale</b>. Informare sempre di ogni variazione.</div></div>
+<!-- ═══════ 8 · PILLOLE ═══════ -->
+<div class="slide dark">
+  <div class="geo g1" style="opacity:.3"></div>
+  <div class="a up"><div class="tag">Pillole di Saggezza</div></div>
+  <div class="a"><h1 class="t-med" style="margin-bottom:28px">Le regole <span class="hi">non scritte</span></h1></div>
+  <div class="lst a">
+    <div class="li"><div class="dot"></div><div class="lt"><b>Vai dove le cose accadono</b> — non desumere, non immaginare. Osserva di persona (Gemba).</div></div>
+    <div class="li"><div class="dot"></div><div class="lt">Il costo dipende dal <b>tempo totale di risposta</b>, non solo dal tempo di attraversamento.</div></div>
+    <div class="li"><div class="dot"></div><div class="lt">I costi di magazzino hanno molti <b>fattori nascosti</b> oltre al costo del denaro.</div></div>
+    <div class="li"><div class="dot"></div><div class="lt">Focalizzarsi sulla domanda reale crea <b>stabilità</b> ed elimina gli sprechi alla fonte.</div></div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════════
-     SLIDE 10 — DIVIDER MOD 3
-═══════════════════════════════════════════════════ -->
-<div class="slide bg-divider" data-anim>
+<!-- ═══════ 9 · DIV 02 ═══════ -->
+<div class="slide divbg">
+  <div class="geo g1" style="opacity:.3"></div>
+  <div class="a fade"><div class="div-module">Modulo 02</div></div>
+  <div class="a"><div class="div-title">Mappare<br>il Flusso</div></div>
+  <div class="a"><div class="div-sub">Stato attuale vs. stato futuro e le 6 aree del Fulfillment Stream</div></div>
+  <div class="div-n">02</div>
+</div>
+
+<!-- ═══════ 10 · IL FLUSSO ═══════ -->
+<div class="slide dark">
+  <div class="a up"><div class="tag">Value Stream Mapping</div></div>
+  <div class="a"><h1 class="t-med" style="margin-bottom:14px">L'analisi <span class="hi">parte dal cliente</span></h1></div>
+  <div class="a"><p class="body" style="margin-bottom:26px">E procede <b>a ritroso</b> lungo tutto il flusso.</p></div>
+  <div class="flow a" style="margin-bottom:28px">
+    <div class="fb"><div class="ft">Cliente</div><div class="fs">Punto di partenza</div></div>
+    <div class="fa">←</div>
+    <div class="fb ac"><div class="ft">Logistica Uscita</div><div class="fs">Spedizioni</div></div>
+    <div class="fa">←</div>
+    <div class="fb ac"><div class="ft">Produzione</div><div class="fs">Pacemaker Point</div></div>
+    <div class="fa">←</div>
+    <div class="fb ac"><div class="ft">Magazzino</div><div class="fs">Supermarket</div></div>
+    <div class="fa">←</div>
+    <div class="fb"><div class="ft">Fornitore</div><div class="fs">Logistica entrata</div></div>
+  </div>
+  <div class="a"><div class="info"><div class="ii">ℹ</div><div class="it">Non desumere, non immaginare: <b>raccogli i dati sul campo</b>. La mappa parte dalla realtà, non dalle opinioni.</div></div></div>
+</div>
+
+<!-- ═══════ 11 · AS IS → TO BE ═══════ -->
+<div class="slide dark">
+  <div class="a up"><div class="tag">I 3 Passi</div></div>
+  <div class="a"><h1 class="t-med" style="margin-bottom:26px">Da <span class="hi-r">AS IS</span> a <span class="hi">TO BE</span></h1></div>
+  <div class="sl a">
+    <div class="si"><div class="sn">1</div><div><div class="sti">Mappa lo stato attuale</div><div class="sde">Dove si accumula scorta? Dove ci sono attese? Dove si spreca tempo? Raccolta dati precisa.</div></div></div>
+    <div class="si"><div class="sn">2</div><div><div class="sti">Identifica le contromisure</div><div class="sde">Per ciascuna delle 6 aree definisci azioni concrete basate sui principi guida Lean.</div></div></div>
+    <div class="si"><div class="sn">3</div><div><div class="sti">Costruisci lo stato futuro</div><div class="sde">Obiettivi ambiziosi — es. −7,9% costi totali. Metriche che guardano l'intero flusso, non solo il proprio reparto.</div></div></div>
+  </div>
+</div>
+
+<!-- ═══════ 12 · LE 6 AREE ═══════ -->
+<div class="slide dark">
+  <div class="a up"><div class="tag">Struttura del Flusso</div></div>
+  <div class="a"><h1 class="t-med" style="margin-bottom:24px">Le <span class="hi">6 Aree</span> del Fulfillment Stream</h1></div>
+  <div class="g3c a">
+    <div class="card-lg"><div class="cn">01</div><div class="ct">Cliente</div><div class="cb">Sistema <b>Pull</b> + flusso livellato sulla domanda reale.</div></div>
+    <div class="card-lg"><div class="cn">02</div><div class="ct">Logistica in Uscita</div><div class="cb">Consegne al ritmo della domanda: <b>Takt Time</b>.</div></div>
+    <div class="card-lg"><div class="cn">03</div><div class="ct">Spedizioni &amp; Ricevimento</div><div class="cb"><b>Lavoro standardizzato</b> e pianificazione sulla domanda reale.</div></div>
+    <div class="card-lg"><div class="cn">04</div><div class="ct">Ordini del Materiale</div><div class="cb"><b>PFEP:</b> ogni articolo ha un metodo predefinito di rifornimento.</div></div>
+    <div class="card-lg"><div class="cn">05</div><div class="ct">Supermarket</div><div class="cb">Il più vicino possibile al punto di utilizzo. Rifornimento con <b>Kanban</b>.</div></div>
+    <div class="card-lg"><div class="cn">06</div><div class="ct">Fornitori</div><div class="cb">Allineati alla <b>stessa domanda reale</b>. Sempre informati di ogni variazione.</div></div>
+  </div>
+</div>
+
+<!-- ═══════ 13 · DIV 03 ═══════ -->
+<div class="slide divbg">
+  <div class="geo g1" style="opacity:.3"></div>
+  <div class="a fade"><div class="div-module">Modulo 03</div></div>
+  <div class="a"><div class="div-title">Domanda del Cliente<br>&amp; Logistica in Uscita</div></div>
+  <div class="a"><div class="div-sub">VOC, Takt Time, sistema Pull, Milk Run e tipi di scorta</div></div>
+  <div class="div-n">03</div>
+</div>
+
+<!-- ═══════ 14 · VOC ═══════ -->
+<div class="slide dark">
+  <div class="a up"><div class="tag">La Voce del Cliente</div></div>
+  <div class="a"><h1 class="t-big">VOC — <span class="hi">Voce del Cliente</span></h1></div>
+  <div class="voc a">
+    <div class="vb"><div class="vl">Aspettative</div><div class="vs">Cosa si attende</div></div>
+    <div class="vc"><div class="vcl">Soddi-<br>sfazione</div></div>
+    <div class="vb"><div class="vl">Percezione</div><div class="vs">Cosa riceve</div></div>
+  </div>
+  <div class="a"><div class="info"><div class="ii">ℹ</div><div class="it">Si misura con <b>interviste mirate</b> sulle singole righe d'ordine: giusta quantità, giusti tempi, qualità attesa. Non si suppone: si chiede.</div></div></div>
+</div>
+
+<!-- ═══════ 15 · TAKT TIME ═══════ -->
+<div class="slide dark">
   <div class="geo g1" style="opacity:.35"></div>
-  <div class="anim fade"><div class="div-label">Modulo 03</div></div>
-  <div class="anim"><div class="div-title">Domanda del Cliente<br>&amp; Logistica in Uscita</div></div>
-  <div class="anim"><div class="div-sub">VOC, Takt Time, sistema Pull, Milk Run e tipi di scorta</div></div>
-  <div class="div-bign">03</div>
+  <div class="a up"><div class="tag">Il Ritmo del Flusso</div></div>
+  <div class="a"><h1 class="t-big"><span class="hi">Takt Time</span></h1></div>
+  <div class="a" style="margin-bottom:28px">
+    <div class="takt">
+      <div class="tt">Tempo Disponibile</div>
+      <div class="td"></div>
+      <div class="tt">Domanda del Cliente</div>
+      <div class="te">= cadenza di produzione e consegna</div>
+    </div>
+  </div>
+  <div class="a"><p class="body" style="margin-bottom:20px">Dimensiona <b>persone, risorse e baia di accoglienza</b> sul consumo reale del cliente.</p></div>
+  <div class="a"><div class="warn"><div class="wi">⚠</div><div class="wt"><b>Ordini in entrata ≠ Consumo reale.</b> Le promozioni spingono i prodotti, ma non aumentano il consumo in modo genuino.</div></div></div>
 </div>
 
-<!-- ══════════════════════════════════════════════════
-     SLIDE 11 — VOC E TAKT TIME
-═══════════════════════════════════════════════════ -->
-<div class="slide bg-dark" data-anim>
-  <div class="anim up"><div class="tag">La Voce del Cliente</div></div>
-  <div class="anim"><h1 style="font-size:54px;margin-bottom:8px"><span class="hi">VOC</span> e Takt Time</h1></div>
-  <div class="anim"><p class="lead" style="margin-bottom:22px">La domanda del cliente <b>stabilisce la cadenza</b> dell'intero Fulfillment Stream.</p></div>
-  <div class="twocol anim" style="gap:36px;max-width:1060px">
-    <div>
-      <div class="voc" style="margin-bottom:20px">
-        <div class="vbox"><div class="vlab">Aspettative</div><div class="vsub">Cosa si attende</div></div>
-        <div class="vcenter"><div class="vclab">Soddi-<br>sfazione</div></div>
-        <div class="vbox"><div class="vlab">Percezione</div><div class="vsub">Cosa riceve</div></div>
-      </div>
-      <div class="info">
-        <div class="info-i">ℹ</div>
-        <div class="info-t">La soddisfazione è il <b>gap tra aspettative e percezione</b>. Si misura con interviste mirate, sulle singole righe d'ordine: giusta quantità, giusti tempi, qualità attesa.</div>
-      </div>
-    </div>
-    <div>
-      <div class="takt" style="margin-bottom:18px">
-        <div class="takt-t">Tempo Disponibile</div>
-        <div class="takt-div"></div>
-        <div class="takt-t">Domanda del Cliente</div>
-        <div class="takt-eq">= Takt Time — cadenza di produzione e consegna</div>
-      </div>
-      <div class="warn">
-        <div class="warn-i">⚠</div>
-        <div class="warn-t"><b>Ordini in entrata ≠ Consumo reale.</b> Le promozioni spingono i prodotti ma non aumentano il consumo se non in modo fittizio nel breve termine.</div>
-      </div>
-    </div>
+<!-- ═══════ 16 · PUSH ═══════ -->
+<div class="slide dark">
+  <div class="a up"><div class="tag">Sistema Tradizionale</div></div>
+  <div class="a"><h1 class="t-big"><span class="hi-r">Sistema Push</span></h1></div>
+  <div class="lst a">
+    <div class="li"><div class="dot dot-r"></div><div class="lt">MRP, MOQ, previsioni rolling: <b>non allineano</b> domanda e ordini ai fornitori</div></div>
+    <div class="li"><div class="dot dot-r"></div><div class="lt">Si produce su previsione → <b>scorte eccessive</b> e risposta lenta alla variabilità</div></div>
+    <div class="li"><div class="dot dot-r"></div><div class="lt"><b>Lunghi lead time</b> e costi nascosti di magazzino che non si vedono subito</div></div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════════
-     SLIDE 12 — PUSH VS PULL
-═══════════════════════════════════════════════════ -->
-<div class="slide bg-dark" data-anim>
-  <div class="anim up"><div class="tag">Il Cuore del Sistema</div></div>
-  <div class="anim"><h1 style="font-size:56px;margin-bottom:18px"><span style="color:var(--red)">Push</span> vs <span class="hi">Pull</span></h1></div>
-  <div class="cmp anim">
-    <div class="cmp-col cmp-bad">
-      <div class="cmp-head">Sistema Push — Tradizionale</div>
-      <div class="ilist">
-        <div class="iitem"><div class="idot" style="background:var(--red)"></div><div class="itext" style="font-size:clamp(15px,1.45vw,18px)">MRP, MOQ, previsioni rolling: <b>non allineano</b> domanda e ordini ai fornitori</div></div>
-        <div class="iitem"><div class="idot" style="background:var(--red)"></div><div class="itext" style="font-size:clamp(15px,1.45vw,18px)">Si produce su previsione → <b>scorte eccessive</b> e risposta lenta alla variabilità</div></div>
-        <div class="iitem"><div class="idot" style="background:var(--red)"></div><div class="itext" style="font-size:clamp(15px,1.45vw,18px)">Lunghi lead time, costi nascosti di magazzino</div></div>
-      </div>
-    </div>
-    <div class="cmp-col cmp-good">
-      <div class="cmp-head">Sistema Pull — Lean</div>
-      <div class="ilist">
-        <div class="iitem"><div class="idot" style="background:var(--green)"></div><div class="itext" style="font-size:clamp(15px,1.45vw,18px)"><b>Kanban:</b> intervalli regolari, quantità variabili — si produce solo quando si consuma</div></div>
-        <div class="iitem"><div class="idot" style="background:var(--green)"></div><div class="itext" style="font-size:clamp(15px,1.45vw,18px)"><b>JIT (Just In Time):</b> intervalli variabili, quantità fisse — per consumi elevati</div></div>
-        <div class="iitem"><div class="idot" style="background:var(--green)"></div><div class="itext" style="font-size:clamp(15px,1.45vw,18px)">Il <b>Pacemaker Point</b> trasmette il segnale a ritroso nel flusso</div></div>
-      </div>
-    </div>
+<!-- ═══════ 17 · PULL ═══════ -->
+<div class="slide dark">
+  <div class="a up"><div class="tag">Sistema Lean</div></div>
+  <div class="a"><h1 class="t-big"><span class="hi-g">Sistema Pull</span></h1></div>
+  <div class="lst a" style="margin-bottom:28px">
+    <div class="li"><div class="dot dot-g"></div><div class="lt"><b>Kanban:</b> intervalli regolari, quantità variabili — si produce solo quando si consuma</div></div>
+    <div class="li"><div class="dot dot-g"></div><div class="lt"><b>JIT (Just In Time):</b> intervalli variabili, quantità fisse — per consumi elevati e continui</div></div>
+    <div class="li"><div class="dot dot-g"></div><div class="lt">Il <b>Pacemaker Point</b> trasmette il segnale di consumo a ritroso nel flusso</div></div>
   </div>
-  <div class="info anim" style="margin-top:18px;max-width:1060px">
-    <div class="info-i">💡</div>
-    <div class="info-t"><b>Milk Run:</b> rotta di trasporto con fermate multiple. Più consegne frequenti, lotti più piccoli, meno scorte, risposta più rapida alla variabilità della domanda.</div>
-  </div>
+  <div class="a"><div class="info"><div class="ii">💡</div><div class="it"><b>Milk Run:</b> rotta con fermate multiple. Consegne frequenti + lotti piccoli = meno scorte e risposta più rapida.</div></div></div>
 </div>
 
-<!-- ══════════════════════════════════════════════════
-     SLIDE 13 — TIPI DI SCORTA
-═══════════════════════════════════════════════════ -->
-<div class="slide bg-dark" data-anim>
-  <div class="anim up"><div class="tag">Strategia delle Scorte</div></div>
-  <div class="anim"><h1 style="font-size:54px;margin-bottom:8px">I <span class="hi">3 Tipi</span> di Scorta</h1></div>
-  <div class="anim"><p class="lead" style="margin-bottom:22px">Strategia di magazzino basata sul <b>TIRO del cliente</b>.</p></div>
-  <div class="stocks anim" style="margin-bottom:20px">
-    <div class="scard cycle">
-      <div class="slabel">Cycle Stock</div>
-      <div class="stname">Scorta Ciclo</div>
-      <div class="stdesc">Scorta operativa per far fronte alla domanda normale e prevedibile.</div>
-    </div>
-    <div class="scard buffer">
-      <div class="slabel">Buffer Stock</div>
-      <div class="stname">Scorta Tampone</div>
-      <div class="stdesc">Riserva per oscillazioni prevedibili della domanda (es. stagionalità nota).</div>
-    </div>
-    <div class="scard safety">
-      <div class="slabel">Safety Stock</div>
-      <div class="stname">Scorta di Sicurezza</div>
-      <div class="stdesc">Riserva per variazioni imprevedibili o emergenze di fornitura.</div>
-    </div>
+<!-- ═══════ 18 · 3 SCORTE ═══════ -->
+<div class="slide dark">
+  <div class="a up"><div class="tag">Strategia delle Scorte</div></div>
+  <div class="a"><h1 class="t-med" style="margin-bottom:26px">I <span class="hi">3 Tipi</span> di Scorta</h1></div>
+  <div class="a" style="display:flex;gap:18px;max-width:1080px;width:100%;margin-bottom:24px">
+    <div class="stk cy"><div class="slb">Cycle Stock</div><div class="stn">Scorta Ciclo</div><div class="std">Domanda normale e prevedibile.</div></div>
+    <div class="stk bu"><div class="slb">Buffer Stock</div><div class="stn">Scorta Tampone</div><div class="std">Oscillazioni prevedibili della domanda (es. stagionalità nota).</div></div>
+    <div class="stk sf"><div class="slb">Safety Stock</div><div class="stn">Scorta di Sicurezza</div><div class="std">Variazioni imprevedibili o emergenze di fornitura.</div></div>
   </div>
-  <div class="info anim" style="max-width:1000px">
-    <div class="info-i">💡</div>
-    <div class="info-t"><b>Come ridurle:</b> aumentare la velocità dei materiali = diminuire i lotti + aumentare la frequenza di consegna. Pochi pezzi per imballo, ottimizzazione volumetrica dei container. PDCA quotidiano tra logistica, acquisti, produzione e servizio clienti.</div>
-  </div>
+  <div class="a"><div class="info"><div class="ii">💡</div><div class="it"><b>Come ridurle:</b> più velocità dei materiali = lotti più piccoli + consegne più frequenti. PDCA quotidiano tra logistica, acquisti, produzione e servizio clienti.</div></div></div>
 </div>
 
-<!-- ══════════════════════════════════════════════════
-     SLIDE 14 — DIVIDER MOD 4
-═══════════════════════════════════════════════════ -->
-<div class="slide bg-divider" data-anim>
+<!-- ═══════ 19 · DIV 04 ═══════ -->
+<div class="slide divbg">
+  <div class="geo g1" style="opacity:.3"></div>
+  <div class="a fade"><div class="div-module">Modulo 04</div></div>
+  <div class="a"><div class="div-title">Logistica in Entrata<br>&amp; Fornitori</div></div>
+  <div class="a"><div class="div-sub">PFEP, Kanban, Supermarket, Baia di scambio e imballaggio</div></div>
+  <div class="div-n">04</div>
+</div>
+
+<!-- ═══════ 20 · SPEDIZIONI ═══════ -->
+<div class="slide dark">
   <div class="geo g1" style="opacity:.35"></div>
-  <div class="anim fade"><div class="div-label">Modulo 04</div></div>
-  <div class="anim"><div class="div-title">Logistica in Entrata<br>&amp; Fornitori</div></div>
-  <div class="anim"><div class="div-sub">PFEP, Kanban, Supermarket, Baia di scambio e imballaggio</div></div>
-  <div class="div-bign">04</div>
+  <div class="a up"><div class="tag">Logistica Operativa</div></div>
+  <div class="a"><h1 class="t-med" style="margin-bottom:8px">Spedizioni &amp; <span class="hi">Ricevimento</span></h1></div>
+  <div class="a"><p class="body" style="margin-bottom:26px">Il punto più costoso del flusso: <b>attrezzature, persone, attese</b>.</p></div>
+  <div class="sl a">
+    <div class="si"><div class="sn">1</div><div><div class="sti">Dimensionamento sul Takt Time reale</div><div class="sde">Non sulle medie storiche. Pianificare anche i tempi di inattività dovuti alla variabilità dei trasporti.</div></div></div>
+    <div class="si"><div class="sn">2</div><div><div class="sti">Processi standardizzati</div><div class="sde">Piani spedizioni su rotte standard, schedulazione smistamento mezzi, Milk Run.</div></div></div>
+    <div class="si"><div class="sn">3</div><div><div class="sti">Un solo controllo, a monte</div><div class="sde">Le ispezioni ripetute non creano valore. Una sola verifica preventiva elimina il rilavorazione.</div></div></div>
+  </div>
 </div>
 
-<!-- ══════════════════════════════════════════════════
-     SLIDE 15 — GESTIONE SPEDIZIONI
-═══════════════════════════════════════════════════ -->
-<div class="slide bg-dark" data-anim>
-  <div class="anim up"><div class="tag">Logistica Operativa</div></div>
-  <div class="anim"><h1 style="font-size:48px;margin-bottom:8px">Gestione <span class="hi">Spedizioni</span>,<br>Ricevimento &amp; Accoglienza Mezzi</h1></div>
-  <div class="anim"><p class="lead" style="margin-bottom:20px">Il punto più costoso del flusso: attrezzature, persone, attese.</p></div>
-  <div class="twocol anim" style="max-width:1060px;gap:30px">
-    <div class="slist">
-      <div class="sitem"><div class="snum">1</div><div><div class="stitle">Dimensionamento corretto</div><div class="sdesc">Persone e risorse calcolate sul Takt Time reale. Pianificare anche il tempo di inattività dovuto alla variabilità dei trasporti per non creare picchi.</div></div></div>
-      <div class="sitem"><div class="snum">2</div><div><div class="stitle">Processi standardizzati</div><div class="sdesc">Piani spedizioni su rotte standard, schedulazione smistamento mezzi, Milk Run per ottimizzare le consegne in entrata e uscita.</div></div></div>
-      <div class="sitem"><div class="snum">3</div><div><div class="stitle">Riduzione ispezioni</div><div class="sdesc">Un solo controllo preventivo a monte. Le ispezioni ripetute non creano valore e aumentano i costi.</div></div></div>
+<!-- ═══════ 21 · METODI RIFORN ═══════ -->
+<div class="slide dark">
+  <div class="a up"><div class="tag">Metodi di Rifornimento</div></div>
+  <div class="a"><h1 class="t-med" style="margin-bottom:26px">Il metodo <span class="hi">giusto</span> per ogni articolo</h1></div>
+  <div class="g3c a">
+    <div class="card-lg" style="border-color:rgba(0,200,151,.35);background:rgba(0,200,151,.07)">
+      <div class="cn" style="color:var(--green)">Kanban</div>
+      <div class="ct" style="color:var(--green)">Consumo stabile</div>
+      <div class="cb">Quantità costanti, intervalli regolari. Segnale automatico dal Pacemaker Point.</div>
     </div>
-    <div>
-      <div class="hbox" style="margin-bottom:16px">
-        <div class="hbox-title">PREP — Plan for Every Part</div>
-        <div class="hbox-body">Ogni codice movimentato deve essere schedulato in anticipo. <b>Conoscere codici e quantità prima dell'arrivo</b> è fondamentale per usare la baia in modo efficace.</div>
-      </div>
-      <div class="methods" style="grid-template-columns:1fr;gap:10px">
-        <div class="mcard kanban"><div class="mname">Kanban</div><div class="mdetail">Consumo stabile → quantità costanti, intervalli regolari</div></div>
-        <div class="mcard jit"><div class="mname">JIT — Just In Time</div><div class="mdetail">Consumo elevato → quantità e intervalli variabili</div></div>
-        <div class="mcard mrp"><div class="mname">MRP</div><div class="mdetail">Lunghi tempi di approvvigionamento, uso sporadico o stagionale</div></div>
-      </div>
+    <div class="card-lg" style="border-color:rgba(0,168,232,.35);background:rgba(0,125,180,.1)">
+      <div class="cn" style="color:var(--cyan)">JIT</div>
+      <div class="ct" style="color:var(--cyan)">Consumo elevato</div>
+      <div class="cb">Quantità e intervalli variabili. Adatto a volumi alti e continui.</div>
+    </div>
+    <div class="card-lg">
+      <div class="cn">MRP</div>
+      <div class="ct">Uso sporadico</div>
+      <div class="cb">Lunghi tempi di approvvigionamento. Per articoli stagionali o a basso consumo.</div>
+    </div>
+  </div>
+  <div class="a" style="margin-top:20px"><div class="info"><div class="ii">ℹ</div><div class="it"><b>PREP:</b> ogni codice movimentato va schedulato in anticipo — conoscere codici e quantità prima dell'arrivo è fondamentale.</div></div></div>
+</div>
+
+<!-- ═══════ 22 · PFEP ═══════ -->
+<div class="slide dark">
+  <div class="a up"><div class="tag">Rifornimento Intelligente</div></div>
+  <div class="a"><h1 class="t-big"><span class="hi">PFEP</span> — Plan For Every Part</h1></div>
+  <div class="lst a" style="margin-bottom:28px">
+    <div class="li"><div class="dot"></div><div class="lt">Database completo per ogni codice: <b>consumo, fornitore, frequenza consegna, dimensione lotto</b></div></div>
+    <div class="li"><div class="dot"></div><div class="lt">È la base per costruire il <b>Supermarket</b> e pianificare il <b>Milk Run</b> dei fornitori</div></div>
+    <div class="li"><div class="dot"></div><div class="lt">Permette di scegliere il <b>metodo giusto</b> per ogni singolo articolo</div></div>
+  </div>
+  <div class="a"><div class="warn"><div class="wi">⚠</div><div class="wt"><b>MRP, MOQ e previsioni rolling</b> non permettono un allineamento ottimale tra domanda del cliente e ordini ai fornitori.</div></div></div>
+</div>
+
+<!-- ═══════ 23 · KANBAN ═══════ -->
+<div class="slide dark">
+  <div class="a up"><div class="tag">Il Segnale Pull</div></div>
+  <div class="a"><h1 class="t-big">Come funziona il <span class="hi">Kanban</span></h1></div>
+  <div class="sl a">
+    <div class="si">
+      <div class="sn" style="background:rgba(0,200,151,.15);border-color:rgba(0,200,151,.4);color:var(--green)">1</div>
+      <div><div class="sti">Il Pacemaker Point consuma</div><div class="sde">Quando il materiale viene usato, si genera un "ammanco" nel sistema.</div></div>
+    </div>
+    <div class="si">
+      <div class="sn" style="background:rgba(0,200,151,.15);border-color:rgba(0,200,151,.4);color:var(--green)">2</div>
+      <div><div class="sti">Il segnale viaggia a ritroso</div><div class="sde">Il Kanban comunica al fornitore o al supermarket esattamente ciò che è stato consumato.</div></div>
+    </div>
+    <div class="si">
+      <div class="sn" style="background:rgba(0,200,151,.15);border-color:rgba(0,200,151,.4);color:var(--green)">3</div>
+      <div><div class="sti">Si rifornisce solo ciò che serve</div><div class="sde">Nulla in anticipo. Intervallo di riferimento medio, quantità effettiva variabile in base al consumo reale.</div></div>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════════
-     SLIDE 16 — PFEP E KANBAN
-═══════════════════════════════════════════════════ -->
-<div class="slide bg-dark" data-anim>
-  <div class="anim up"><div class="tag">Rifornimento Intelligente</div></div>
-  <div class="anim"><h1 style="font-size:54px;margin-bottom:8px"><span class="hi">PFEP</span> e <span class="hi">Kanban</span></h1></div>
-  <div class="anim"><p class="lead" style="margin-bottom:20px">Ogni articolo deve avere un metodo predefinito di rifornimento.</p></div>
-  <div class="twocol anim" style="max-width:1060px;gap:32px">
-    <div>
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--cyan);margin-bottom:14px">PFEP — Plan For Every Part</div>
-      <div class="ilist" style="margin-bottom:18px">
-        <div class="iitem"><div class="idot"></div><div class="itext">Database completo per ogni codice: consumo, fornitore, frequenza consegna, dimensione lotto</div></div>
-        <div class="iitem"><div class="idot"></div><div class="itext">Base per costruire il Supermarket e pianificare il Milk Run dei fornitori</div></div>
-        <div class="iitem"><div class="idot"></div><div class="itext">Permette di scegliere il metodo giusto per ogni singolo articolo</div></div>
-      </div>
-      <div class="warn">
-        <div class="warn-i">⚠</div>
-        <div class="warn-t"><b>MRP, MOQ e previsioni rolling</b> non permettono un allineamento ottimale tra domanda del cliente e ordini ai fornitori.</div>
-      </div>
-    </div>
-    <div>
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--green);margin-bottom:14px">Come funziona il Kanban</div>
-      <div class="slist">
-        <div class="sitem">
-          <div class="snum" style="background:rgba(0,200,151,.15);border-color:rgba(0,200,151,.4);color:var(--green)">1</div>
-          <div><div class="stitle">Il Pacemaker Point consuma</div><div class="sdesc">Quando il materiale viene usato, si genera un "ammanco" nel sistema.</div></div>
-        </div>
-        <div class="sitem">
-          <div class="snum" style="background:rgba(0,200,151,.15);border-color:rgba(0,200,151,.4);color:var(--green)">2</div>
-          <div><div class="stitle">Il segnale viaggia a ritroso</div><div class="sdesc">Il Kanban comunica al fornitore o al supermarket esattamente ciò che è stato consumato.</div></div>
-        </div>
-        <div class="sitem">
-          <div class="snum" style="background:rgba(0,200,151,.15);border-color:rgba(0,200,151,.4);color:var(--green)">3</div>
-          <div><div class="stitle">Si rifornisce solo ciò che serve</div><div class="sdesc">Nulla in anticipo. Intervallo di riferimento medio, quantità effettiva variabile.</div></div>
-        </div>
-      </div>
-    </div>
+<!-- ═══════ 24 · SUPERMARKET ═══════ -->
+<div class="slide dark">
+  <div class="a up"><div class="tag">Logistica in Entrata</div></div>
+  <div class="a"><h1 class="t-big">Il <span class="hi">Supermarket</span></h1></div>
+  <div class="lst a" style="margin-bottom:28px">
+    <div class="li"><div class="dot"></div><div class="lt">Piccole scorte di materie prime, <b>il più vicino possibile al punto di utilizzo</b></div></div>
+    <div class="li"><div class="dot"></div><div class="lt"><b>Non è un deposito:</b> deve continuamente fluire e rigenerarsi con sistema Pull</div></div>
+    <div class="li"><div class="dot"></div><div class="lt">Si ripristina modificando <b>dimensione del lotto, spazio e frequenza</b> in base al consumo reale</div></div>
   </div>
+  <div class="a"><div class="info"><div class="ii">💡</div><div class="it"><b>Imballi riutilizzabili:</b> ottimizzazione spazio nel mezzo + riduzione costi = beneficio finanziario misurabile con apposita tabella calcolatore.</div></div></div>
 </div>
 
-<!-- ══════════════════════════════════════════════════
-     SLIDE 17 — SUPERMARKET E BAIA
-═══════════════════════════════════════════════════ -->
-<div class="slide bg-dark" data-anim>
-  <div class="anim up"><div class="tag">Logistica in Entrata</div></div>
-  <div class="anim"><h1 style="font-size:52px;margin-bottom:16px"><span class="hi">Supermarket</span> e Baia di Scambio</h1></div>
-  <div class="twocol anim" style="max-width:1060px;gap:28px">
-    <div>
-      <div class="smbox blue" style="margin-bottom:14px">
-        <div class="smbox-title">Il Supermarket</div>
-        <div class="smbox-body"><b>Non è un deposito:</b> deve continuamente fluire e rigenerarsi con sistema Pull. Piccole scorte di materie prime il più vicino possibile al punto di utilizzo. Si ripristina modificando lotto, spazio e frequenza in base al consumo reale.</div>
-      </div>
-      <div class="smbox green">
-        <div class="smbox-title">Imballi Riutilizzabili</div>
-        <div class="smbox-body">Ottimizzazione dello spazio nel mezzo di trasporto + riduzione costi = <b>beneficio finanziario misurabile</b>. Usa la tabella calcolatore dedicata.</div>
-      </div>
-    </div>
-    <div>
-      <div class="smbox gold" style="margin-bottom:14px">
-        <div class="smbox-title">Baia di Scambio (Cross-Docking)</div>
-        <div class="ilist" style="margin-top:4px">
-          <div class="iitem"><div class="idot" style="background:var(--gold)"></div><div class="itext" style="font-size:clamp(14px,1.35vw,17px)">Il materiale viene smistato in <b>poche ore</b> — non staziona in magazzino</div></div>
-          <div class="iitem"><div class="idot" style="background:var(--gold)"></div><div class="itext" style="font-size:clamp(14px,1.35vw,17px)">Richiede conoscenza <b>anticipata</b> di codici e quantità in arrivo (PREP)</div></div>
-          <div class="iitem"><div class="idot" style="background:var(--gold)"></div><div class="itext" style="font-size:clamp(14px,1.35vw,17px)"><b>PDCA continuo</b> per garantire efficienza e zero sprechi di spazio e tempo</div></div>
-        </div>
-      </div>
-      <div class="info">
-        <div class="info-i">💡</div>
-        <div class="info-t">Piano standardizzato logistica in entrata: <b>Analisi → Mappatura fornitori → Supermarket → Baia → Imballaggio → PDCA quotidiano</b></div>
-      </div>
-    </div>
+<!-- ═══════ 25 · BAIA ═══════ -->
+<div class="slide dark">
+  <div class="a up"><div class="tag">Baia di Scambio</div></div>
+  <div class="a"><h1 class="t-big"><span class="hi">Cross-Docking</span></h1></div>
+  <div class="lst a" style="margin-bottom:28px">
+    <div class="li"><div class="dot dot-gold"></div><div class="lt">Il materiale viene smistato in <b>poche ore</b> — non staziona in magazzino</div></div>
+    <div class="li"><div class="dot dot-gold"></div><div class="lt">Richiede conoscenza <b>anticipata</b> di codici e quantità in arrivo (PREP)</div></div>
+    <div class="li"><div class="dot dot-gold"></div><div class="lt"><b>PDCA continuo</b> per garantire efficienza e zero sprechi di spazio e tempo</div></div>
   </div>
+  <div class="a"><div class="info"><div class="ii">💡</div><div class="it">Piano standard: <b>Analisi stato attuale → Mappatura fornitori → Supermarket → Baia → Imballaggio → PDCA quotidiano</b></div></div></div>
 </div>
 
-<!-- ══════════════════════════════════════════════════
-     SLIDE 18 — DIVIDER MOD 5
-═══════════════════════════════════════════════════ -->
-<div class="slide bg-divider" data-anim>
+<!-- ═══════ 26 · DIV 05 ═══════ -->
+<div class="slide divbg">
+  <div class="geo g1" style="opacity:.3"></div>
+  <div class="a fade"><div class="div-module">Modulo 05</div></div>
+  <div class="a"><div class="div-title">PDCA &amp; A3</div></div>
+  <div class="a"><div class="div-sub">Il ciclo di miglioramento continuo e il problem solving strutturato</div></div>
+  <div class="div-n">05</div>
+</div>
+
+<!-- ═══════ 27 · PDCA ═══════ -->
+<div class="slide dark">
+  <div class="a up"><div class="tag">Miglioramento Continuo</div></div>
+  <div class="a"><h1 class="t-med" style="margin-bottom:26px">Il ciclo <span class="hi">PDCA</span></h1></div>
+  <div class="pdca a">
+    <div class="pb pl"><div class="pl-l">P</div><div class="pw">Plan</div><div class="pd2">Definisci il problema e progetta la soluzione con dati concreti, non supposizioni.</div></div>
+    <div class="pb pd"><div class="pl-l">D</div><div class="pw">Do</div><div class="pd2">Implementa su scala ridotta. Agisci sul campo, non solo sulla carta.</div></div>
+    <div class="pb pc"><div class="pl-l">C</div><div class="pw">Check</div><div class="pd2">Misura i risultati. Il PDCA fa emergere i problemi nascosti nel flusso.</div></div>
+    <div class="pb pa"><div class="pl-l">A</div><div class="pw">Act</div><div class="pd2">Standardizza ciò che funziona. Ricomincia su ciò che non funziona.</div></div>
+  </div>
+  <div class="a" style="margin-top:22px"><div class="info"><div class="ii">ℹ</div><div class="it">Il PDCA richiede: <b>misurazioni, lavoro standardizzato, riunioni regolari e disciplina costante</b>.</div></div></div>
+</div>
+
+<!-- ═══════ 28 · A3 ═══════ -->
+<div class="slide dark">
   <div class="geo g1" style="opacity:.35"></div>
-  <div class="anim fade"><div class="div-label">Modulo 05</div></div>
-  <div class="anim"><div class="div-title">PDCA &amp; A3</div></div>
-  <div class="anim"><div class="div-sub">Il ciclo di miglioramento continuo e il problem solving strutturato</div></div>
-  <div class="div-bign">05</div>
-</div>
-
-<!-- ══════════════════════════════════════════════════
-     SLIDE 19 — PDCA E A3
-═══════════════════════════════════════════════════ -->
-<div class="slide bg-dark" data-anim>
-  <div class="anim up"><div class="tag">Strumenti del Metodo</div></div>
-  <div class="anim"><h1 style="font-size:56px;margin-bottom:8px"><span class="hi">PDCA</span> &amp; <span class="hi">A3</span></h1></div>
-  <div class="anim"><p class="lead" style="margin-bottom:20px">Il PDCA richiede: misurazioni, lavoro standardizzato, riunioni regolari e disciplina.</p></div>
-  <div class="twocol anim" style="max-width:1060px;gap:36px">
-    <div class="pdca">
-      <div class="pbox plan"><div class="pletter">P</div><div class="pword">Plan</div><div class="pdesc">Definisci il problema e progetta la soluzione con dati concreti, non supposizioni.</div></div>
-      <div class="pbox do"><div class="pletter">D</div><div class="pword">Do</div><div class="pdesc">Implementa su scala ridotta. Agisci sul campo, non solo sulla carta.</div></div>
-      <div class="pbox check"><div class="pletter">C</div><div class="pword">Check</div><div class="pdesc">Misura i risultati. Il PDCA fa emergere i problemi nascosti nel flusso.</div></div>
-      <div class="pbox act"><div class="pletter">A</div><div class="pword">Act</div><div class="pdesc">Standardizza ciò che funziona. Ricomincia il ciclo su ciò che non funziona.</div></div>
-    </div>
-    <div>
-      <div class="hbox" style="margin-bottom:18px">
-        <div class="hbox-title">A3 — Problem Solving Strutturato</div>
-        <div class="hbox-body">
-          Un foglio A3 = un problema: contesto, analisi causa-radice, contromisure, piano d'azione.<br><br>
-          Rende il ragionamento <b>visibile e condivisibile</b>. Interventi strutturati in logica di sistema, non di emergenza.
-        </div>
-      </div>
-      <div class="ilist">
-        <div class="iitem"><div class="idot" style="background:var(--gold)"></div><div class="itext">Nominare un <b>Leader</b> del Fulfillment Stream Council</div></div>
-        <div class="iitem"><div class="idot" style="background:var(--gold)"></div><div class="itext">Lavorare <b>simultaneamente in tutte le aree</b> — i miglioramenti arriveranno in tempi diversi</div></div>
-        <div class="iitem"><div class="idot" style="background:var(--gold)"></div><div class="itext">Metriche che guardino <b>tutto il fulfillment stream</b>, non solo il proprio reparto</div></div>
-      </div>
-    </div>
+  <div class="a up"><div class="tag">Problem Solving</div></div>
+  <div class="a"><h1 class="t-big">Il metodo <span class="hi">A3</span></h1></div>
+  <div class="a"><p class="body" style="margin-bottom:28px">Un foglio A3 = <b>un problema</b>. Tutto su una pagina.</p></div>
+  <div class="lst a">
+    <div class="li"><div class="dot"></div><div class="lt">Contesto, analisi causa-radice, contromisure, <b>piano d'azione</b></div></div>
+    <div class="li"><div class="dot"></div><div class="lt">Rende il ragionamento <b>visibile e condivisibile</b> a tutto il team</div></div>
+    <div class="li"><div class="dot"></div><div class="lt">Interventi strutturati in logica di <b>sistema</b>, non di emergenza</div></div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════════
-     SLIDE 20 — CHIUSURA
-═══════════════════════════════════════════════════ -->
-<div class="slide bg-cover" data-anim>
+<!-- ═══════ 29 · COUNCIL ═══════ -->
+<div class="slide dark">
+  <div class="a up"><div class="tag">La Struttura Organizzativa</div></div>
+  <div class="a"><h1 class="t-med" style="margin-bottom:20px">Il <span class="hi">Fulfillment Stream Council</span></h1></div>
+  <div class="a"><p class="body" style="margin-bottom:28px">Il gruppo cross-funzionale che <b>supervisiona l'intero flusso</b> e abbatte i muri tra reparti.</p></div>
+  <div class="lst a">
+    <div class="li"><div class="dot"></div><div class="lt">Nominare un <b>Leader dedicato</b> con visione sull'intero fulfillment stream</div></div>
+    <div class="li"><div class="dot"></div><div class="lt">Lavorare <b>simultaneamente in tutte le aree</b> — i risultati arriveranno in tempi diversi</div></div>
+    <div class="li"><div class="dot"></div><div class="lt">Sviluppare metriche che guardino <b>l'intero flusso</b>, non solo il proprio reparto</div></div>
+  </div>
+</div>
+
+<!-- ═══════ 30 · CHIUSURA ═══════ -->
+<div class="slide cover">
   <div class="geo g1"></div><div class="geo g2"></div><div class="geo g3"></div><div class="geo gdot"></div>
-  <div class="anim up" style="margin-bottom:18px"><div class="tag">Fine del Corso</div></div>
-  <div class="anim"><h1 style="font-size:clamp(60px,7vw,96px);margin-bottom:14px">La barca<br>corre <span class="hi">veloce</span>.</h1></div>
-  <div class="anim"><p class="lead" style="margin-bottom:26px;max-width:580px">Rimuovi gli ostacoli uno alla volta, con gradualità e definitivamente.<br>Il flusso scorrerà da solo.</p></div>
-  <div class="anim"><div class="quote" style="max-width:620px;margin-bottom:28px">"Più ricavi, meno costi, maggiore produttività:<br>questo è il risultato del Lean Fulfillment Stream."</div></div>
-  <div class="badges anim">
+  <div class="a up" style="margin-bottom:16px"><div class="tag">Fine del Corso</div></div>
+  <div class="a"><h1 class="t-huge" style="margin-bottom:16px">La barca<br>corre <span class="hi">veloce</span>.</h1></div>
+  <div class="a"><p class="body" style="margin-bottom:28px;max-width:780px">Rimuovi gli ostacoli uno alla volta, con gradualità e definitivamente.<br>Il flusso <b>scorrerà da solo</b>.</p></div>
+  <div class="a"><div class="quote" style="margin-bottom:30px">"Più ricavi, meno costi, maggiore produttività:<br>questo è il risultato del Lean Fulfillment Stream."</div></div>
+  <div class="badges a">
     <div class="badge">Lean Thinking</div>
     <div class="badge">Kaizen</div>
     <div class="badge">PDCA</div>
@@ -849,35 +597,26 @@ h1 .hi{color:var(--cyan)}
 
 <script>
 const slides = Array.from(document.querySelectorAll('.slide'));
-const total = slides.length;
-let cur = 0;
-let busy = false;
+const N = slides.length;
+let cur = 0, busy = false;
+document.getElementById('tot').textContent = N;
 
-document.getElementById('tot').textContent = total;
-
-function triggerAnim(slide) {
-  // Find all direct .anim children of the slide and of .twocol inside
-  const elems = slide.querySelectorAll('.anim');
-  // reset first
-  elems.forEach(el => {
+function animate(slide) {
+  const els = slide.querySelectorAll('.a');
+  els.forEach(el => {
     el.style.transition = 'none';
     el.style.opacity = '0';
-    const base = el.classList.contains('up') ? 'translateX(-28px)' :
-                 el.classList.contains('right') ? 'translateX(28px)' :
-                 el.classList.contains('fade') ? 'none' : 'translateY(28px)';
-    el.style.transform = base === 'none' ? '' : base;
+    if (el.classList.contains('up')) el.style.transform = 'translateX(-32px)';
+    else if (el.classList.contains('fade')) el.style.transform = 'none';
+    else el.style.transform = 'translateY(32px)';
   });
-  // trigger after tiny delay so reset takes effect
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      elems.forEach((el, i) => {
-        el.style.transition = '';
-        el.style.transitionDelay = (0.07 + i * 0.13) + 's';
-        el.style.opacity = '1';
-        el.style.transform = '';
-      });
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    els.forEach((el, i) => {
+      el.style.transition = `opacity .6s ease ${.08 + i * .14}s, transform .6s ease ${.08 + i * .14}s`;
+      el.style.opacity = '1';
+      el.style.transform = 'none';
     });
-  });
+  }));
 }
 
 function goTo(n) {
@@ -885,41 +624,37 @@ function goTo(n) {
   busy = true;
   const from = slides[cur];
   const dir = n > cur ? 1 : -1;
-  cur = ((n % total) + total) % total;
+  cur = ((n % N) + N) % N;
   const to = slides[cur];
 
-  // exit from
-  from.style.transition = 'opacity .45s ease, transform .45s ease';
-  from.style.opacity = '0';
-  from.style.transform = `translateX(${dir < 0 ? 60 : -60}px)`;
   from.classList.remove('active');
+  from.classList.add('out');
+  from.style.transform = `translateX(${dir < 0 ? 60 : -60}px)`;
 
-  // prep to
   to.style.transition = 'none';
   to.style.opacity = '0';
   to.style.transform = `translateX(${dir > 0 ? 60 : -60}px)`;
   to.classList.add('active');
 
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      to.style.transition = 'opacity .48s ease, transform .48s ease';
-      to.style.opacity = '1';
-      to.style.transform = 'translateX(0)';
-      triggerAnim(to);
-      setTimeout(() => {
-        from.style.transition = '';
-        from.style.transform = '';
-        busy = false;
-      }, 520);
-    });
-  });
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    to.style.transition = 'opacity .48s ease, transform .48s ease';
+    to.style.opacity = '1';
+    to.style.transform = 'none';
+    animate(to);
+    setTimeout(() => {
+      from.classList.remove('out');
+      from.style.transform = '';
+      from.style.opacity = '';
+      busy = false;
+    }, 520);
+  }));
 
   document.getElementById('cur').textContent = cur + 1;
-  document.getElementById('prog-fill').style.width = ((cur + 1) / total * 100) + '%';
+  document.getElementById('fill').style.width = ((cur + 1) / N * 100) + '%';
 }
 
-function next() { goTo(cur + 1 >= total ? 0 : cur + 1); }
-function prev() { goTo(cur - 1 < 0 ? total - 1 : cur - 1); }
+function next() { goTo(cur + 1 >= N ? 0 : cur + 1); }
+function prev() { goTo(cur - 1 < 0 ? N - 1 : cur - 1); }
 
 document.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
@@ -927,15 +662,14 @@ document.addEventListener('keydown', e => {
 });
 
 let tx = 0;
-document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, {passive:true});
+document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
 document.addEventListener('touchend', e => {
   const dx = e.changedTouches[0].clientX - tx;
   if (Math.abs(dx) > 55) dx < 0 ? next() : prev();
-}, {passive:true});
+}, { passive: true });
 
-// init first slide anim
-document.getElementById('prog-fill').style.width = (1 / total * 100) + '%';
-setTimeout(() => triggerAnim(slides[0]), 200);
+document.getElementById('fill').style.width = (1 / N * 100) + '%';
+setTimeout(() => animate(slides[0]), 150);
 </script>
 </body>
 </html>
